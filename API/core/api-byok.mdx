@@ -1,0 +1,55 @@
+---
+title: "Book Your Own API Key (BYOK)"
+description: "Store your own third-party provider API key for private usage."
+---
+
+# POST `/byok/`
+
+Store your own API key for a selected provider (e.g., OpenAI).  
+This allows the system to use **your key** when performing provider-specific operations.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format    | Required | Description            |
+| ------------- | --------------- | -------- | ---------------------- |
+| Authorization | Token `<token>` | Yes      | Authenticates the user |
+
+---
+
+## 📤 Request Body
+
+| Field    | Type   | Required | Description                           |
+| -------- | ------ | -------- | ------------------------------------- |
+| provider | String | Yes      | Name of the provider (e.g., `openai`) |
+| key      | String | Yes      | Your API key for the provider         |
+
+## Example Request Body
+
+```json
+{
+  "provider": "openai",
+  "key": "sk=<openapikey>"
+}
+```
+
+## Example Response
+
+```json
+{
+  "provider": "openai",
+  "created": true
+}
+```
+
+---
+
+## Response Fields
+
+| Field    | Type    | Description                             |
+| -------- | ------- | --------------------------------------- |
+| provider | String  | Provider name                           |
+| created  | Boolean | Whether the key was successfully stored |
+
+---

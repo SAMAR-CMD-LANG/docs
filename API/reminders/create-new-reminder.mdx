@@ -1,0 +1,94 @@
+---
+title: "Create Reminders for a Task"
+description: "Create one or more reminders for a specific task."
+---
+
+# POST `/tasks/tasks/{task_uuid}/reminders/`
+
+Create one or more reminders for a task.  
+Each array item must include either an `offset_preset` or an `actual_trigger_time`.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|-----|--------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔗 Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| task_uuid | UUID | Yes | ID of the task to attach reminders to |
+
+---
+
+## 📤 Request Body
+
+Array of reminder objects:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| offset_preset | String | Optional | A preset offset such as `"10_minutes_before"` or `"1_hour_before"` |
+| actual_trigger_time | ISO datetime | Optional | Exact trigger time in UTC |
+
+### Example Request Body
+
+```json
+[
+  {"offset_preset": "10_minutes_before"},
+  {"offset_preset": "1_hour_before"},
+  {"actual_trigger_time": "2024-01-15T10:00:00Z"}
+]
+```
+---
+### Example Response Body
+```json
+{
+  "detail": "Successfully created 3 reminders.",
+  "created": [
+    {
+      "uuid": "d65cbe38-6c37-4356-8670-b18762bf9d62",
+      "offset_preset": "10_minutes_before",
+      "actual_trigger_time": "2025-08-25T12:20:00Z",
+      "is_active": true
+    },
+    {
+      "uuid": "a3a2e403-776c-4eac-9335-389e7ab18332",
+      "offset_preset": "1_hour_before",
+      "actual_trigger_time": "2025-08-25T11:30:00Z",
+      "is_active": true
+    },
+    {
+      "uuid": "f80a8c83-3ebe-4229-ae2c-e3fb1bb6410f",
+      "offset_preset": null,
+      "actual_trigger_time": "2024-01-15T10:00:00Z",
+      "is_active": true
+    }
+  ]
+}
+```
+---
+## Response Fields
+| Field   | Type   | Description                 |
+|---------|--------|-----------------------------|
+| detail  | String | Summary message             |
+| created | Array  | List of created reminders   |
+---
+---
+title: "Reminder Object Fields"
+description: "Field definitions for a reminder object returned by the API."
+---
+---
+Below are the fields returned for each reminder object.
+
+| Field               | Type         | Description                                        |
+|---------------------|--------------|----------------------------------------------------|
+| uuid                | UUID         | Unique identifier of the reminder                  |
+| offset_preset       | String/null  | Offset preset or null if using `actual_trigger_time` |
+| actual_trigger_time | ISO datetime | When the reminder will trigger                     |
+| is_active           | Boolean      | Whether the reminder is active                     |
+---

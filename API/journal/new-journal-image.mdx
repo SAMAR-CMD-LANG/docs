@@ -1,0 +1,121 @@
+---
+title: "Create New Journal (Images)"
+description: "Creates a journal entry for a specific date with one or more uploaded image attachments."
+---
+
+**POST** `/journals/{date}/`
+
+This endpoint creates a **journal entry containing one or more images** for the given date.  
+Image files must be uploaded using **multipart/form-data**.
+
+Only the authenticated user can upload image journals.  
+The `content` field is optional and can be empty.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format          | Required | Description |
+|---------------|-----------------------|----------|-------------|
+| Authorization | `Token <token>`       | Yes      | User authentication token |
+| Content-Type  | `multipart/form-data` | Yes      | Required for uploading image files |
+
+---
+
+## 📝 Form-Data Fields
+
+| Field   | Datatype | Required | Description |
+|---------|----------|----------|-------------|
+| images  | file     | Yes      | One or more images (`png`, `jpg`, `jpeg`, etc.) |
+| content | string   | No       | Optional text content for the journal entry |
+
+---
+
+## 📌 Example Form-Data
+
+| Key     | Type | Value         |
+|---------|------|---------------|
+| images  | File | image1.png    |
+| content | Text | ""            |
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/journals/2025-06-18/" \
+  -H "Authorization: Token 6a0110..." \
+  -F "images=@/path/to/image1.png" \
+  -F "content="
+```
+
+---
+
+# 🧩 Response Body Fields
+
+| Field        | Datatype | Required | Description |
+|--------------|----------|----------|-------------|
+| journal_uuid | string   | Yes      | Unique identifier of the journal entry |
+| content      | string   | Yes      | Journal content (can be empty) |
+| date         | string   | Yes      | Journal entry date (YYYY-MM-DD) |
+| attachment   | array    | Yes      | Array of uploaded image objects |
+| created_at   | string   | Yes      | Timestamp when the journal was created |
+| updated_at   | string   | Yes      | Timestamp when the journal was last updated |
+
+---
+
+# 🧩 Attachment Object Fields
+
+| Field      | Datatype | Required | Description |
+|------------|----------|----------|-------------|
+| id         | number   | Yes      | Attachment ID |
+| url        | string   | Yes      | Public file URL |
+| type       | string   | Yes      | Always `"image"` |
+| size       | number   | Yes      | File size in bytes |
+| name       | string   | Yes      | Original file name |
+| created_at | string   | Yes      | Timestamp of upload |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "journal_uuid": "8015475e-4f08-435f-9fbc-20109015777b",
+    "content": "",
+    "date": "2025-06-18",
+    "attachment": [
+        {
+            "id": 1454,
+            "url": "https://s3.ap-southeast-1.wasabisys.com/samantha/media/image/c3bccd8b-d689-41f1-9d3b-ae8648467e0c.png",
+            "type": "image",
+            "size": 22933,
+            "name": "Screenshot 2025-11-13 125746.png",
+            "created_at": "2025-11-16T15:30:40.248128Z"
+        }
+    ],
+    "created_at": "2025-11-16T15:30:40.250856Z",
+    "updated_at": "2025-11-16T15:30:40.250860Z"
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing image file or invalid data |
+| 401 Unauthorized | Missing/invalid token |
+| 415 Unsupported Media Type | Invalid file format |
+| 500 Internal Server Error | Unexpected backend failure |
+
+---
+
+# 📘 Notes
+
+- Supports **multiple image uploads** in one request.  
+- The **attachment array** contains metadata for each uploaded image.  
+- The `content` field may be empty if only images are uploaded.  
+- Useful for photo journals or mood boards.
+

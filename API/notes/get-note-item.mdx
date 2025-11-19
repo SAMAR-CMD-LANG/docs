@@ -1,0 +1,84 @@
+---
+title: "Get Note Item"
+description: "Retrieve a specific note item by its item_uuid inside a parent note."
+---
+
+**GET** `/notes/{note_uuid}/items/{item_uuid}`
+
+Retrieves the full details of a **specific note item** within a note.  
+Includes content, ordering, attachments, metadata, and any associated AI-generated content.  
+Only the authenticated owner can access note items.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format      | Required | Description |
+|--------------|--------------------|----------|-------------|
+| Authorization | `Token <token>`   | Yes      | User authentication token |
+
+---
+
+## 📝 Example Request
+
+**URL**
+```
+{{base_url}}notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/items/6e9c49af-9c09-46a0-a88c-c32084be3925/
+```
+
+**Headers**
+```
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/items/6e9c49af-9c09-46a0-a88c-c32084be3925/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "item_uuid": "6e9c49af-9c09-46a0-a88c-c32084be3925",
+    "content": "Additional note content",
+    "order": 0,
+    "attachment": [],
+    "ai_content_items": [],
+    "created_at": "2025-11-17T09:18:32.360853Z",
+    "updated_at": "2025-11-17T09:18:32.360879Z"
+}
+```
+
+---
+
+# 📦 Response Body Fields
+
+| Field            | Datatype | Required | Description |
+|------------------|----------|----------|-------------|
+| item_uuid        | string   | Yes      | Unique identifier of the note item |
+| content          | string   | Yes      | Text or HTML content of the note item |
+| order            | number   | Yes      | Position of the item inside the note |
+| attachment       | array    | Yes      | List of file attachments (empty if none) |
+| ai_content_items | array    | Yes      | AI-generated additions linked to this item |
+| created_at       | string   | Yes      | Timestamp when the item was created |
+| updated_at       | string   | Yes      | Timestamp when the item was last updated |
+
+---
+
+# ⚠️ Error Responses
+
+| Code | Meaning |
+|------|---------|
+| 401 | Unauthorized — missing/invalid token |
+| 404 | Note or note item not found |
+| 500 | Server error |
+
+---
+

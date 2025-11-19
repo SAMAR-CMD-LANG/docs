@@ -1,0 +1,70 @@
+---
+title: "Generate AI Content for Note Item"
+description: "Generate AI-powered insight or content for a specific note item."
+---
+
+**POST** `/notes/{note_uuid}/items/{item_uuid}/ai/`
+
+Generates AI-generated content (insight, to-do list, summary, etc.) for a specific note item.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format  | Required | Description |
+|---------------|---------------|----------|-------------|
+| Authorization | Token `<token>` | Yes      | Auth token |
+| Content-Type  | application/json | Yes    | JSON request |
+
+---
+
+## 📝 Request Body
+
+| Field        | Type   | Required | Description |
+|--------------|--------|----------|-------------|
+| insight_type | string | Yes      | Type of insight to generate (`to-do`, `summary`, `rewrite`, etc.) |
+
+---
+
+## 📮 Example Request
+
+```bash
+POST {{base_url}}notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/items/6e9c49af-9c09-46a0-a88c-c32084be3925/ai/
+```
+
+**Body:**
+
+```json
+{
+    "insight_type": "to-do"
+}
+```
+
+---
+
+## ✅ Successful Response (200 OK)
+
+```json
+{
+    "ai_content_uuid": "6798b223-2328-4c36-8282-48bcc554879a",
+    "content": "- Review updated item text.  \n- Confirm accuracy and clarity.  \n- Save the changes.  \n- Notify team of update.",
+    "insight_type": "to-do",
+    "source_content": "",
+    "created_at": "2025-11-18T05:34:38.381972Z"
+}
+```
+
+---
+
+## 📦 Response Fields
+
+| Field           | Type   | Description |
+|-----------------|--------|-------------|
+| ai_content_uuid | string | Unique ID of AI-generated content |
+| content         | string | Generated text |
+| insight_type    | string | Insight type used |
+| source_content  | string | Original note-item text (if any) |
+| created_at      | string | Timestamp |
+
+---
+

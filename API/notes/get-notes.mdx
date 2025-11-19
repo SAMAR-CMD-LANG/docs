@@ -1,0 +1,155 @@
+---
+title: "Get All Notes"
+description: "Retrieves a paginated list of all notes belonging to the authenticated user."
+---
+
+**GET** `/notes/`
+
+This endpoint retrieves a **paginated list of all notes** created by the authenticated user.  
+Each note returned includes summary information such as the title, category, pinned status, and a preview of the first note item's content.
+
+Pagination is handled using `count`, `next`, `previous`, and `results`.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format    | Required | Description |
+|---------------|-----------------|----------|-------------|
+| Authorization | `Token <token>` | Yes      | User authentication token |
+
+---
+
+## 📝 Request Body
+
+This endpoint does **not** take a request body.
+
+| Field | Datatype | Required | Description |
+|-------|----------|----------|-------------|
+| none  | —        | —        | Not required |
+
+---
+
+## 📌 Example Request
+
+```
+GET {{base_url}}notes/
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/notes/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+# 🧩 Response Body Fields (Top Level)
+
+| Field    | Datatype       | Required | Description |
+|----------|----------------|----------|-------------|
+| count    | number         | Yes      | Total number of notes |
+| next     | string / null  | Yes      | URL for next page (or `null`) |
+| previous | string / null  | Yes      | URL for previous page (or `null`) |
+| results  | array          | Yes      | List of note objects |
+
+---
+
+# 🧩 Note Object (results[]) Fields
+
+| Field             | Datatype | Required | Description |
+|-------------------|----------|----------|-------------|
+| note_uuid         | string   | Yes      | Unique identifier of the note |
+| title             | string   | Yes      | Title of the note |
+| category          | number   | Yes      | Category ID |
+| labels            | array    | Yes      | Array of label IDs |
+| is_pinned         | boolean  | Yes      | Whether the note is pinned |
+| first_item_content | string  | Yes      | Preview of the first note item |
+| created_at        | string   | Yes      | Timestamp when note was created |
+| updated_at        | string   | Yes      | Timestamp when note was last updated |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "count": 5,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "note_uuid": "4be6f57f-46a5-4759-a38f-09d38ea4ac7b",
+            "title": "srijan test 5",
+            "category": 2,
+            "labels": [],
+            "is_pinned": true,
+            "first_item_content": "This is the content for request number 5. Lorem Ipsum...",
+            "created_at": "2025-06-03T12:24:21.295733Z",
+            "updated_at": "2025-06-03T12:24:21.295762Z"
+        },
+        {
+            "note_uuid": "63aaf278-fb73-4649-9ed7-ef399d47531d",
+            "title": "srijan test 4",
+            "category": 2,
+            "labels": [],
+            "is_pinned": true,
+            "first_item_content": "This is the content for request number 4. Lorem Ipsum...",
+            "created_at": "2025-06-03T12:24:20.684209Z",
+            "updated_at": "2025-06-03T12:24:20.684233Z"
+        },
+        {
+            "note_uuid": "4be83950-c789-4f78-91c9-9e823c2dfe22",
+            "title": "srijan test 3",
+            "category": 2,
+            "labels": [],
+            "is_pinned": true,
+            "first_item_content": "This is the content for request number 3. Lorem Ipsum...",
+            "created_at": "2025-06-03T12:24:20.165174Z",
+            "updated_at": "2025-06-03T12:24:20.165213Z"
+        },
+        {
+            "note_uuid": "b68d185c-58cb-4d8d-a5a8-00209e4b6b00",
+            "title": "srijan test 2",
+            "category": 2,
+            "labels": [],
+            "is_pinned": true,
+            "first_item_content": "This is the content for request number 2. Lorem Ipsum...",
+            "created_at": "2025-06-03T12:24:19.511936Z",
+            "updated_at": "2025-06-03T12:24:19.511965Z"
+        },
+        {
+            "note_uuid": "606f5b11-390b-4491-9958-968a79b8466b",
+            "title": "srijan test 1",
+            "category": 2,
+            "labels": [],
+            "is_pinned": true,
+            "first_item_content": "This is the content for request number 1. Lorem Ipsum...",
+            "created_at": "2025-06-03T12:24:18.891302Z",
+            "updated_at": "2025-06-03T12:24:18.891323Z"
+        }
+    ]
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 401 Unauthorized | Missing or invalid token |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Pagination keys (`next`, `previous`) allow lazy-loading large lists.  
+- `first_item_content` is useful to preview a note without fetching items.  
+- To get full note content, you must call **Get Single Note**.
+

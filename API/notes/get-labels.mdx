@@ -1,0 +1,52 @@
+---
+title: "Get All Labels"
+description: "Retrieve a list of all labels belonging to the authenticated user."
+---
+
+**GET** `/notes/labels/`
+
+Returns all labels created by the authenticated user.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format  | Required | Description |
+|--------------|----------------|----------|-------------|
+| Authorization | Token `<token>` | Yes      | User authentication token |
+
+---
+
+## 📮 Example Request
+
+```bash
+GET {{base_url}}notes/labels/
+Authorization: Token <token>
+```
+
+---
+
+## ✅ Successful Response (200 OK)
+
+```json
+[
+    {
+        "label_uuid": "24a7aedc-975d-4f6d-8147-1cc46c6fcc93",
+        "name": "Very Important",
+        "color": "combo-box-green"
+    }
+]
+```
+
+---
+
+## 📦 Label Object Fields
+
+| Field      | Type   | Description |
+|------------|--------|-------------|
+| label_uuid | string | Unique identifier for the label |
+| name       | string | Label name |
+| color      | string | Color identifier used for label styling |
+
+---
+

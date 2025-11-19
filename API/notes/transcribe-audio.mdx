@@ -1,0 +1,47 @@
+---
+title: "Transcribe Existing Audio"
+description: "Transcribe a previously uploaded audio attachment from a note item. Free users receive restricted-access response."
+---
+
+**POST** `/notes/{note_uuid}/items/{item_uuid}/transcribe/`
+
+Attempts to generate text from an existing audio attachment already stored in a note item.  
+Only paid / lifetime users can access this feature. Free users receive a restricted-access message.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format       | Required | Description |
+|---------------|---------------------|----------|-------------|
+| Authorization | Token `<token>`       | Yes      | Authentication token |
+| Content-Type  | application/json    | Yes      | Required even without body |
+
+---
+
+## 📮 Example Request
+
+```bash
+POST {{base_url}}notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/items/5ae34a5f-4f25-4a2f-9215-d596e24e044d/transcribe/
+```
+
+---
+
+## 🚫 Response for Free User
+
+```json
+{
+    "error": "This feature requires a lifetime/subscription plan"
+}
+```
+
+---
+
+## 📦 Response Fields (Free User)
+
+| Field | Type   | Description |
+|--------|--------|-------------|
+| error  | string | Indicates that transcription is unavailable for free users |
+
+---
+

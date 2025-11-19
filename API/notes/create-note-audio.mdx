@@ -1,0 +1,116 @@
+---
+title: "Create Note (Audio Attachment)"
+description: "Create a new note with an uploaded audio file and optional transcription."
+---
+
+**POST** `/notes/`
+
+Creates a new note with an audio attachment.  
+Supports optional transcription if `transcription=true`.  
+Returns full note metadata including embedded audio HTML.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format         | Required | Description |
+|---------------|-----------------------|----------|-------------|
+| Authorization | Token `<token>`         | Yes      | Authentication token |
+| Content-Type  | multipart/form-data   | Yes      | Required for audio uploads |
+
+---
+
+## 📝 Form-Data Fields
+
+| Field        | Type    | Required | Description |
+|--------------|---------|----------|-------------|
+| file         | file (audio) | Yes | Audio file to upload |
+| note_uuid    | string  | Yes | Client-generated UUID for the note |
+| title        | string  | Yes | Title for the note |
+| category     | number  | Yes | Category ID |
+| transcription| string (“true” or “false”) | No | Whether to auto-transcribe |
+| content      | string  | No | Optional text/HTML content |
+
+---
+
+## 📮 Example Request
+
+```bash
+POST {{base_url}}notes/
+```
+
+Example form-data (JSON format for documentation):
+
+```json
+[
+  { "key": "file", "type": "file", "value": ["sample-3.m4a"] },
+  { "key": "note_uuid", "value": "d0a8ebdc-09f1-4bef-934f-a130801952d1", "type": "text" },
+  { "key": "title", "value": "You're welcome!", "type": "text" },
+  { "key": "category", "value": "1", "type": "text" },
+  { "key": "transcription", "value": "false", "type": "text" },
+  { "key": "content", "value": "Thank you.", "type": "text" }
+]
+```
+
+---
+
+## ✅ Example Response (201 Created)
+
+```json
+{
+    "note_uuid": "d0a8ebdc-09f1-4bef-934f-a130801952d1",
+    "title": "You're welcome!",
+    "category": 1,
+    "labels": [],
+    "is_pinned": false,
+    "is_public": false,
+    "content": "<div class=\"attachment-embed\" data-attachment-id=\"1462\" data-attachment-type=\"audio\" data-url=\"https://s3.ap-southeast-1.wasabisys.com/samantha/media/audio/1821b2c4-aef8-4b96-9089-5091f69714d4.m4a\" data-name=\"sample-3.m4a\" data-size=\"343380\" data-created-on=\"2025-11-18T06:15:16.810326+00:00\" data-alignment=\"center\">[Attachment: sample-3.m4a]</div> Thank you.",
+    "attachments": [
+        {
+            "id": 1462,
+            "url": "https://s3.ap-southeast-1.wasabisys.com/samantha/media/audio/1821b2c4-aef8-4b96-9089-5091f69714d4.m4a",
+            "type": "audio",
+            "size": 343380,
+            "name": "sample-3.m4a",
+            "created_at": "2025-11-18T06:15:16.810326Z"
+        }
+    ],
+    "ai_content_items": [],
+    "created_at": "2025-11-18T06:15:14.336673Z",
+    "updated_at": "2025-11-18T06:15:18.233890Z"
+}
+```
+
+---
+
+## 📦 Response Fields
+
+| Field | Type | Description |
+|--------|------|-------------|
+| note_uuid | string | Unique ID for the note |
+| title | string | Note title |
+| category | number | Category ID |
+| labels | array | List of labels |
+| is_pinned | boolean | Pin status |
+| is_public | boolean | Public accessibility |
+| content | string (HTML) | Full note content with embedded audio |
+| attachments | array | List of audio attachment metadata |
+| ai_content_items | array | AI content items (if any) |
+| created_at | string | Creation timestamp |
+| updated_at | string | Last updated timestamp |
+
+---
+
+## 📎 Attachment Object Fields
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| id | number | Attachment ID |
+| url | string | Public audio URL |
+| type | string | Always `"audio"` |
+| size | number | File size in bytes |
+| name | string | Original filename |
+| created_at | string | Upload timestamp |
+
+---
+

@@ -1,0 +1,43 @@
+---
+title: "Universal Transcribe Endpoint"
+description: "Upload an audio file and receive its transcription."
+---
+
+# POST `/transcribe/`
+
+Upload an audio file for transcription.  
+Requires authentication and multipart form-data.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+| Content-Type | multipart/form-data | Yes | Required for file uploads |
+
+---
+
+## 📤 Form Data
+
+| Field | Type | Required | Description |
+|--------|--------|----------|-------------|
+| audio | File (audio) | Yes | The audio file to be transcribed |
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| transcription | String | The extracted text from the audio |
+
+### Example Response
+
+```json
+{
+  "transcription": " Thank you."
+}

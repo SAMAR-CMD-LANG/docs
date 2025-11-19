@@ -1,0 +1,38 @@
+---
+title: "Register New User"
+description: "Create a new user account and send an email verification link."
+---
+
+
+
+**POST** `/auth/register/`
+
+This endpoint registers a new user by creating an account and automatically sending a verification email to confirm their identity.
+
+---
+
+## 📝 Request Body
+
+All fields below must be included in the JSON body.
+
+| Field        | Type   | Required | Description                                        |
+| ------------ | ------ | -------- | -------------------------------------------------- |
+| `email`      | string | yes      | User’s valid and unique email address.             |
+| `first_name` | string | yes      | User’s first name.                                 |
+| `last_name`  | string | yes      | User’s last name.                                  |
+| `password1`  | string | yes      | User password. Must follow backend password rules. |
+| `password2`  | string | yes      | Must match `password1` for confirmation.           |
+
+---
+
+## 📌 Example Request
+
+```json
+{
+  "email": "samarjith.r@senatio.com",
+  "first_name": "samarjith",
+  "last_name": "R",
+  "password1": "samarjith123",
+  "password2": "samarjith123"
+}
+```

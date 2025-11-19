@@ -1,0 +1,74 @@
+---
+title: "Send Magic Login Link"
+description: "Sends a magic login link to the user's registered email. Magic links allow passwordless authentication."
+---
+
+**POST** `/auth/magic-link/request/`
+
+This endpoint sends a **magic login link** to the user’s email address.  
+Magic links allow users to securely authenticate **without entering a password**.  
+When the user clicks the link, they are automatically verified and logged into the application.
+
+---
+
+## 📝 Request Body Parameters
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| email  | string   | Yes      | The user's registered email address to send the magic link. |
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+    "email": "samarjith.r@senatio.com"
+}
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/auth/magic-link/request/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "samarjith.r@senatio.com"
+  }'
+```
+
+---
+
+
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "message": "If an account with this email exists, a login link has been sent."
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Invalid or missing email. |
+| 404 Not Found | No user found with this email (optional depending on backend). |
+| 429 Too Many Requests | Too many magic link requests sent. |
+| 500 Internal Server Error | Unexpected backend issue. |
+
+---
+
+# 📘 Notes
+
+- This endpoint always returns a **generic success message** for security reasons.  
+- The magic link contains a secure token that logs the user in automatically.  
+- Magic links provide secure passwordless authentication.
+

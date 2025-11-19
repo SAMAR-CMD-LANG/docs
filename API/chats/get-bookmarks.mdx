@@ -1,0 +1,126 @@
+---
+title: "Get All Bookmarked Messages"
+description: "Retrieves all bookmarked chat messages belonging to the authenticated user."
+---
+
+**GET** `/chats/bookmarks/`
+
+This endpoint fetches **all bookmarked messages** across all chat sessions for the authenticated user.  
+It returns an array of message objects, each representing a bookmarked chat message.
+
+A valid authentication token is required.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format         | Required | Description |
+|---------------|----------------------|----------|-------------|
+| Authorization | `Token <token>`      | Yes      | User authentication token |
+
+---
+
+## 📝 Request Body
+
+No request body is required.
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| (none) | —        | —        | The endpoint does not accept request body. |
+
+---
+
+## 📌 Example Request
+
+```
+GET {{base_url}}/chats/bookmarks/
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/chats/bookmarks/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+## 💡 Example JavaScript (fetch)
+
+```javascript
+fetch("https://your-api.com/chats/bookmarks/", {
+  method: "GET",
+  headers: {
+    "Authorization": "Token 6a0110..."
+  }
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+---
+
+# 🧩 Bookmarked Message Object Structure
+
+Each element in the returned array has the following fields:
+
+| Field           | Datatype     | Required | Description |
+|------------------|--------------|----------|-------------|
+| message_uuid     | string       | Yes      | Unique message identifier |
+| session_uuid     | string       | Yes      | ID of the chat session the message belongs to |
+| role             | string       | Yes      | `"user"` or `"assistant"` |
+| content          | string       | Yes      | Text content of the message |
+| structured_data  | string/null  | No       | Additional metadata (optional) |
+| timestamp        | string       | Yes      | Timestamp of message creation |
+| is_bookmarked    | boolean      | Yes      | Always `true` for this endpoint |
+| attachment       | array        | Yes      | List of attachments (empty if none) |
+
+---
+
+# 📌 Example Response (200 OK)
+
+```json
+[
+    {
+        "message_uuid": "e41f1bf8-e2ad-4f45-9b01-3e0fae52bbfc",
+        "session_uuid": "d6b5f71f-3f41-46da-8dc3-78e6e706e1cf",
+        "role": "assistant",
+        "content": "Zemuria is a fascinating place, rich in history and culture...",
+        "structured_data": null,
+        "timestamp": "2025-06-03T09:15:47.113539Z",
+        "is_bookmarked": true,
+        "attachment": []
+    },
+    {
+        "message_uuid": "ab98f77d-3321-4fdd-8da9-45ffafa130cd",
+        "session_uuid": "4a798a20-de51-41ab-848d-d28f8954d8f3",
+        "role": "user",
+        "content": "explain me how vectors work",
+        "structured_data": null,
+        "timestamp": "2025-08-11T11:02:32.991234Z",
+        "is_bookmarked": true,
+        "attachment": []
+    }
+]
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 401 Unauthorized | Missing or invalid token |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Bookmarks can belong to **different chat sessions**.  
+- Use this endpoint to create a **Bookmarks** page in the UI.  
+- Messages will always have `"is_bookmarked": true` in this response.
+

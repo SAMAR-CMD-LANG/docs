@@ -1,0 +1,50 @@
+---
+title: "Register FCM Device"
+description: "Register a device with an FCM token so the user can receive push notifications."
+---
+
+# POST `/fcm/register/`
+
+Register a device for Firebase Cloud Messaging notifications.  
+Requires an authentication token.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 📤 Request Body
+
+| Field | Type | Required | Description |
+|--------|--------|----------|-------------|
+| registration_token | String | Yes | Firebase registration token for the device |
+| device_type | String | Yes | Device type (`WEB`, `ANDROID`, `IOS`) |
+
+## Example Request Body
+
+```json
+{
+  "registration_token": "diTF5nIcayP5Yw77w4RvPq:APA91bGkD5rF2pQVVm1JPGKGvrToOCXQWqZ5NAbC2G-CmluZhKKuDiXZofOzaTK-ZNlQEcoaaK3oJKGIcxySQaTCE6hDZziDpc7f8_3Y4p9hHm8SI2Y_6AI",
+  "device_type": "WEB"
+}
+```
+
+
+## Example Response
+```json
+{
+  "message": "Device registered successfully."
+}
+```
+
+---
+## Response Fields
+| Field   | Type   | Description      |
+|---------|--------|------------------|
+| message | String | Success message  |
+---

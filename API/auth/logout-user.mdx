@@ -1,0 +1,35 @@
+---
+title: "Logout User"
+description: "Logs out the currently authenticated user by invalidating their authentication token."
+---
+
+
+
+**POST** `/auth/logout`
+
+This endpoint logs out the authenticated user by invalidating their access token.
+
+---
+
+## 🔐 Required Headers
+
+| Header          | Required | Description |
+|-----------------|----------|-------------|
+| `Authorization` | yes      | Format: `Token <user_token>` |
+
+---
+
+## 📝 Request Body
+
+This endpoint **does not take a request body**.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| —     | —    | —        | No body fields required. |
+
+---
+
+## 📌 Example Header
+
+```bash
+Authorization: Token 66b97f2a4b9c76a00f3edc69ba1592f44e38f7b6

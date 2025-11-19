@@ -1,0 +1,87 @@
+---
+title: "Delete Journal Entry"
+description: "Permanently deletes a journal entry and all associated attachments using its journal UUID."
+---
+
+**DELETE** `/journals/{journal_uuid}/`
+
+This endpoint permanently deletes a journal entry identified by its **journal_uuid**.  
+All associated attachments (images, audio, etc.) are removed as well.
+
+Only the authenticated owner of the journal can delete it.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format    | Required | Description |
+|---------------|-----------------|----------|-------------|
+| Authorization | `Token <token>` | Yes      | User authentication token |
+
+---
+
+## 📝 Request Body
+
+This endpoint does **not** require a request body.
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| (none) | —        | —        | No body required |
+
+---
+
+## 📌 Example Request
+
+```
+DELETE {{base_url}}journals/11e88ab8-df0b-42d9-bd83-9102935f70c2/
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X DELETE "https://your-api.com/journals/11e88ab8-df0b-42d9-bd83-9102935f70c2/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+## ✅ Successful Response (204 No Content)
+
+A successful deletion returns:
+
+- **HTTP Status:** `204 No Content`  
+- **No response body**
+
+This indicates the journal was deleted successfully.
+
+---
+
+## ❌ Error Response — Journal Not Found (404)
+
+```json
+{
+    "detail": "No JournalEntry matches the given query."
+}
+```
+
+---
+
+## ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 401 Unauthorized | Missing or invalid token |
+| 404 Not Found | Journal entry does not exist |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+## 📘 Notes
+
+- Deletion is **permanent** — the journal entry and all attachments cannot be recovered.  
+- Ensure the user confirms deletion on the frontend before calling this endpoint.  
+- The endpoint does not accept any request body.
+

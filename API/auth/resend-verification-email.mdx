@@ -1,0 +1,81 @@
+---
+title: "Resend Verification Email"
+description: "Resends the account verification email to the user’s registered email address. Useful when the previous link expired or was not received."
+---
+
+
+
+**POST** `/auth/resend-email/`
+
+This endpoint resends the account verification email to the user’s registered email address.  
+It is commonly used when:
+
+- The original verification email was not received  
+- The previous verification link expired  
+- The user clicked “Resend Verification Email” in the UI  
+
+The backend sends a fresh verification link to the specified email.
+
+---
+
+## 📝 Request Body Parameters
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| email  | string   | Yes      | Registered email address to resend the verification link. |
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+    "email": "samarjith.r@senatio.com"
+}
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/auth/resend-email/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "samarjith.r@senatio.com"
+  }'
+```
+
+---
+
+
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "detail": "Verification email sent successfully."
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing or invalid email field. |
+| 404 Not Found | No user registered with the provided email. |
+| 429 Too Many Requests | User requested too many verification emails. |
+| 500 Internal Server Error | Unexpected backend issue. |
+
+---
+
+# 📘 Notes
+
+- This endpoint does **not** verify the user; it only resends the verification link.  
+- The verification email typically contains a token used in `/auth/verify-email/`.  
+- Good UX: Show “Email Sent” regardless of whether the account exists (optional).  
+

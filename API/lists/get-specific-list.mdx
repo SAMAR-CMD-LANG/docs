@@ -1,0 +1,54 @@
+---
+title: "Get Specific Task List"
+description: "Retrieve details of a single task list using its UUID."
+---
+
+**GET** `/tasks/lists/{list_uuid}/`
+
+Retrieves the details of a single task list, including its name, global status, and timestamps.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format     | Required | Description |
+|---------------|------------------|----------|-------------|
+| Authorization | Token `<token>`    | Yes      | User authentication token |
+
+---
+
+## 📮 Example Request
+
+```
+GET {{base_url}}tasks/lists/a1b307c2-b851-490d-b942-353267cf78a3/
+Authorization: Token <token>
+```
+
+---
+
+## ✅ Example Response (200 OK)
+
+```json
+{
+    "uuid": "a1b307c2-b851-490d-b942-353267cf78a3",
+    "name": "Global List",
+    "is_global": true,
+    "created_at": "2025-11-14T05:38:18.198520Z",
+    "updated_at": "2025-11-14T05:38:18.198529Z"
+}
+```
+
+---
+
+## 📦 List Object Fields
+
+| Field      | Type    | Description |
+|------------|---------|-------------|
+| uuid       | string  | Unique ID of the list |
+| name       | string  | Name of the list |
+| is_global  | boolean | Indicates if it's a system/global list |
+| created_at | string  | ISO timestamp when created |
+| updated_at | string  | ISO timestamp when last updated |
+
+---
+

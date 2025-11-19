@@ -1,0 +1,62 @@
+---
+title: "Get Public Note"
+description: "Retrieve the details of a publicly shared note."
+---
+
+# GET `/notes/share/{note_uuid}/`
+
+Fetch a publicly shared note by its UUID.  
+Authentication is required even for public notes.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔗 Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|--------|----------|-------------|
+| note_uuid | UUID | Yes | ID of the public note to retrieve |
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| note_uuid | UUID | Unique identifier of the note |
+| title | String | Title of the note |
+| category | Number | Category ID associated with the note |
+| labels | Array | List of labels |
+| is_pinned | Boolean | Whether the note is pinned |
+| is_public | Boolean | Whether the note is public |
+| content | String | Main body text |
+| attachments | Array | List of attached files |
+| ai_content_items | Array | AI-generated content pieces |
+| created_at | ISO datetime | Creation timestamp |
+| updated_at | ISO datetime | Last updated timestamp |
+
+### Example Response
+
+```json
+{
+  "note_uuid": "f69b5928-1479-4839-b2f3-2a089efdb618",
+  "title": "Untitled Note",
+  "category": 8,
+  "labels": [],
+  "is_pinned": false,
+  "is_public": true,
+  "content": "",
+  "attachments": [],
+  "ai_content_items": [],
+  "created_at": "2025-11-19T07:56:23.651454Z",
+  "updated_at": "2025-11-19T08:52:44.857773Z"
+}

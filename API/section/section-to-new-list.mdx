@@ -1,0 +1,53 @@
+---
+title: Move Section to Another List
+---
+
+### **PATCH /tasks/lists/{list_uuid}/sections/{section_uuid}/**
+
+Moves an existing section from its current list to another target list.
+
+---
+
+## **Headers**
+
+| Key | Value | Required | Description |
+|------|--------|----------|-------------|
+| Authorization | Token `<token>` | Yes | User authentication token |
+| Content-Type | application/json | Yes | JSON request body |
+
+---
+
+## **Request Body**
+
+```json
+{
+  "target_list_uuid": "02696658-b3ef-4175-8619-321ad773e011"
+}
+
+---
+## **Successful Response**
+```json
+[
+{
+  "uuid": "d1b8cb42-1ba6-451d-888d-2eb186751d2a",
+  "name": "samar",
+  "list_uuid": "02696658-b3ef-4175-8619-321ad773e011",
+  "list_name": "project 3",
+  "order": 1,
+  "target_list_name": "project 3"
+}
+
+]
+```
+---
+## Response Fields
+
+| Field            | Type   | Description |
+|------------------|--------|-------------|
+| uuid             | string | Unique identifier of the section |
+| name             | string | Name of the section |
+| list_uuid        | string | UUID of the **new** parent list after moving |
+| list_name        | string | Name of the **new** parent list |
+| order            | number | Section’s position/order within the new list |
+| target_list_name | string | Name of the list the section was moved to |
+---

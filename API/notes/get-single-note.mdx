@@ -1,0 +1,101 @@
+---
+title: "Get Single Note"
+description: "Retrieves full details of a single note including HTML content, labels, pin status, attachments, and metadata."
+---
+
+**GET** `/notes/{note_uuid}/`
+
+This endpoint retrieves the **full details of a specific note** identified by its `note_uuid`.  
+The response includes:
+
+- Full HTML content  
+- Labels  
+- Pin status  
+- Attachments (parsed from the HTML)  
+- AI-generated content (if any)  
+- All metadata (timestamps, visibility flags)
+
+Only the authenticated user can view their own notes.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format    | Required | Description |
+|---------------|-----------------|----------|-------------|
+| Authorization | `Token <token>` | Yes      | User authentication token |
+
+---
+
+## 📌 Example Request
+
+```
+GET {{base_url}}notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+# 🧩 Response Body Fields
+
+| Field            | Datatype      | Required | Description |
+|------------------|---------------|----------|-------------|
+| note_uuid        | string        | Yes      | Unique identifier of the note |
+| title            | string        | Yes      | Title of the note |
+| category         | number        | Yes      | Category ID |
+| labels           | array         | Yes      | Array of label IDs |
+| is_pinned        | boolean       | Yes      | Whether the note is pinned |
+| is_public        | boolean       | Yes      | Whether the note is public |
+| content          | string (HTML) | Yes      | Full HTML note content |
+| attachments      | array         | Yes      | Attachments parsed from HTML |
+| ai_content_items | array         | Yes      | AI-generated items (if any) |
+| created_at       | string        | Yes      | Timestamp of creation |
+| updated_at       | string        | Yes      | Timestamp of last update |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "note_uuid": "2fe802b9-0bc9-4f2c-99d4-d4bb9871f844",
+    "title": "movies to download",
+    "category": 2,
+    "labels": [],
+    "is_pinned": false,
+    "is_public": false,
+    "content": "<div class=\"attachment-embed\" data-attachment-id=\"889\" data-attachment-type=\"audio\" data-url=\"https://s3.ap-southeast-1.wasabisys.com/samantha/media/audio/c4f50509-1615-4e20-9f53-5e6484413236.wav\" data-name=\"October 22, 2025 | 11:59:52 AM.wav\" data-size=\"120910\" data-created-on=\"2025-10-22T11:59:56.000\" data-alignment=\"center\">[Attachment: October 22, 2025 | 11:59:52 AM.wav]</div><p>This is a sample audio recording.</p>",
+    "attachments": [],
+    "ai_content_items": [],
+    "created_at": "2025-11-17T08:53:02.005109Z",
+    "updated_at": "2025-11-17T08:53:02.042331Z"
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 401 Unauthorized | Missing or invalid token |
+| 404 Not Found | Note UUID does not exist |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Attachments are parsed from HTML `<div class="attachment-embed"...>` blocks.  
+- To retrieve note items individually, use **Get Note Item** endpoint.  
+- This endpoint returns complete note data for editing or viewing in a detailed UI.
+

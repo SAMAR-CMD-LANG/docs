@@ -1,0 +1,80 @@
+---
+title: "Update Label"
+description: "Modify an existing note label's name or color."
+---
+
+**PATCH** `/notes/labels/{label_uuid}/`
+
+Updates an existing label's **name** and/or **color**.  
+Only authenticated users can update their own labels.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format     | Required | Description |
+|--------------|-------------------|----------|-------------|
+| Authorization | Token `<token>`    | Yes      | User authentication token |
+| Content-Type  | application/json | Yes      | JSON request body |
+
+---
+
+## 📝 Request Body Fields
+
+| Field | Type   | Required | Description |
+|-------|--------|----------|-------------|
+| name  | string | No       | New display name for the label |
+| color | string | No       | New color identifier (e.g., combo-box-green) |
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X PATCH "https://your-api.com/notes/labels/24a7aedc-975d-4f6d-8147-1cc46c6fcc93/" \
+  -H "Authorization: Token <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "name": "Very Important",
+        "color": "combo-box-green"
+      }'
+```
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "message": "Label updated successfully.",
+    "label": {
+        "label_uuid": "24a7aedc-975d-4f6d-8147-1cc46c6fcc93",
+        "name": "Very Important",
+        "color": "combo-box-green"
+    }
+}
+```
+
+---
+
+# 📦 Response Body Fields
+
+### Top-Level Fields
+
+| Field   | Type   | Description |
+|---------|--------|-------------|
+| message | string | Confirmation message |
+| label   | object | Updated label object |
+
+---
+
+### Label Object Fields
+
+| Field      | Type   | Description |
+|------------|--------|-------------|
+| label_uuid | string | Unique ID of the label |
+| name       | string | Updated label name |
+| color      | string | Updated label color |
+
+---
+

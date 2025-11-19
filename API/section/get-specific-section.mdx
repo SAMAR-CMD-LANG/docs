@@ -1,0 +1,42 @@
+---
+title: Get Specific Section
+---
+
+### **GET /tasks/lists/{list_uuid}/sections/{section_uuid}**
+
+Retrieves a specific section inside the given task list.
+
+---
+
+## **Headers**
+
+| Key | Value | Required | Description |
+|-----|--------|----------|-------------|
+| Authorization | Token `<token>` | Yes | User authentication token |
+
+---
+
+## **Successful Response**
+
+```json
+{
+    "uuid": "558ba33a-6f6e-4120-bb75-119fc61013b7",
+    "name": "home tasks",
+    "list_uuid": "b001c3af-b6eb-498d-a2f6-8f4d2cc9dc39",
+    "list_name": "project 3",
+    "order": 1
+}
+
+```
+---
+## **Response fields**
+
+| Field     | Type   | Description                          |
+|-----------|--------|--------------------------------------|
+| uuid      | string | Unique identifier of the section     |
+| name      | string | Name of the section                  |
+| list_uuid | string | UUID of the parent task list         |
+| list_name | string | Name of the parent task list         |
+| order     | number | Position of the section in the list  |
+
+---

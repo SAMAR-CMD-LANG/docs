@@ -1,0 +1,110 @@
+---
+title: "Delete Chat Session"
+description: "Permanently deletes a chat session and all its messages for the authenticated user."
+---
+
+**DELETE** `/chats/sessions/{session_uuid}/`
+
+This endpoint permanently deletes a **chat session** belonging to the authenticated user.  
+When a session is deleted:
+
+- The chat session itself is removed  
+- All messages inside that session are also deleted  
+
+This action cannot be undone.
+
+The endpoint requires only the **Authorization token**.  
+There is **no request body**.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format         | Required | Description |
+|---------------|----------------------|----------|-------------|
+| Authorization | `Token <your_token>` | Yes      | Authentication token of the logged-in user |
+
+---
+
+## 📝 Request Body
+
+No request body is used.
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| (none) | —        | —        | This endpoint does not use a request body. |
+
+---
+
+## 🧩 Example URL
+
+```
+DELETE {{base_url}}/chats/sessions/25dc6c83-a873-43d5-a862-45c881817cb6/
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X DELETE "https://your-api.com/chats/sessions/25dc6c83-a873-43d5-a862-45c881817cb6/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+## 💡 Example JavaScript (fetch)
+
+```javascript
+const sessionId = "25dc6c83-a873-43d5-a862-45c881817cb6";
+
+fetch(`https://your-api.com/chats/sessions/${sessionId}/`, {
+  method: "DELETE",
+  headers: {
+    "Authorization": "Token 6a0110..."
+  }
+})
+  .then(res => {
+    console.log(res.status); // 204 on success
+  });
+```
+
+---
+
+# ✅ Successful Response (204 No Content)
+
+```
+(No response body)
+```
+
+A 204 status indicates the chat session was successfully deleted.
+
+---
+
+# ❌ Error Response — 404 Not Found
+
+```json
+{
+  "details": "Not found"
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 401 Unauthorized | Missing or invalid token. |
+| 403 Forbidden | User does not own the chat session. |
+| 404 Not Found | Session does not exist or already deleted. |
+| 500 Internal Server Error | Unexpected backend issue. |
+
+---
+
+# 📘 Notes
+
+- Deleting a session removes **all messages** within it.  
+- Frontend should refresh session list after deletion.  
+- Make sure the user receives a confirmation dialog before deleting important chats.
+

@@ -1,0 +1,63 @@
+---
+title: "Bulk Delete Reminders for a Task"
+description: "Delete multiple reminders associated with a specific task."
+---
+
+# DELETE `/tasks/tasks/{task_uuid}/reminders/`
+
+Delete multiple reminders linked to a specific task.  
+Only authenticated users can delete reminders belonging to their tasks.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔗 Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| task_uuid | UUID | Yes | ID of the task whose reminders should be deleted |
+
+---
+
+## 📤 Request Body
+
+| Field | Type | Required | Description |
+|--------|--------|----------|-------------|
+| reminder_uuids | Array of UUIDs | Yes | A list of reminder UUIDs to delete |
+
+### Example Request Body
+
+```json
+{
+  "reminder_uuids": [
+    "f80a8c83-3ebe-4229-ae2c-e3fb1bb6410f",
+    "a3a2e403-776c-4eac-9335-389e7ab18332"
+  ]
+}
+```
+### Example Response Body
+```json
+{
+  "detail": "Successfully deleted 2 reminders.",
+  "deleted_count": 2,
+  "deleted_uuids": [
+    "f80a8c83-3ebe-4229-ae2c-e3fb1bb6410f",
+    "a3a2e403-776c-4eac-9335-389e7ab18332"
+  ]
+}
+```
+---
+### Response Body Fields
+| Field         | Type   | Description                      |
+|--------------|--------|----------------------------------|
+| detail       | String | Summary message                  |
+| deleted_count | Number | Number of reminders deleted      |
+| deleted_uuids | Array  | List of UUIDs that were deleted |
+---

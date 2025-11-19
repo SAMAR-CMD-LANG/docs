@@ -1,0 +1,66 @@
+---
+title: "Update Comment"
+description: "Update an existing comment on a shared note."
+---
+
+# PATCH `/notes/share/{note_uuid}/comments/{comment_uuid}/`
+
+Update the content of an existing comment on a shared note.  
+Authentication is required.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔗 Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|--------|----------|-------------|
+| note_uuid | UUID | Yes | ID of the shared note |
+| comment_uuid | UUID | Yes | ID of the comment to update |
+
+---
+
+## 📤 Request Body
+
+| Field | Type | Required | Description |
+|--------|--------|----------|-------------|
+| content | String | Yes | Updated comment text |
+
+## Example Request Body
+
+```json
+{
+  "content": "this is a change"
+}
+```
+---
+## Example Response Body
+```json
+{
+  "comment_uuid": "f1380777-69ec-4e0c-86c1-cc6c0cc655f3",
+  "content": "this is a change",
+  "user_name": "samarjeeth RS",
+  "replies": [],
+  "created_at": "2025-11-19T09:07:05.623735Z",
+  "updated_at": "2025-11-19T09:37:25.616116Z"
+}
+```
+---
+---
+## Response Fields
+| Field        | Type         | Description                     |
+|--------------|--------------|---------------------------------|
+| comment_uuid | UUID         | Unique identifier of the updated comment |
+| content      | String       | Updated comment text            |
+| user_name    | String       | Name of the user who posted the comment |
+| replies      | Array        | Replies associated with the comment |
+| created_at   | ISO datetime | Original creation timestamp     |
+| updated_at   | ISO datetime | Last updated timestamp          |
+---

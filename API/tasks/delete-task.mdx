@@ -1,0 +1,40 @@
+---
+title: "Delete Task"
+description: "Deletes a specific task permanently. Only authenticated users can delete their own tasks."
+---
+
+## DELETE `/tasks/tasks/{task_uuid}/`
+
+Deletes an existing task.  
+This operation is permanent and cannot be undone.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|-----|--------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔗 Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| task_uuid | UUID | Yes | Unique identifier of the task to delete |
+
+---
+
+## 📤 Request Body
+
+There is **no request body** for this endpoint.
+
+---
+
+## 📥 Response — 204 No Content
+
+The server returns **204 No Content** with an **empty body**.
+
+```text
+<no response body>

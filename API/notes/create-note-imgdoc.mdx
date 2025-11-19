@@ -1,0 +1,139 @@
+---
+title: "Create Note with Image Attachments"
+description: "Create a new note containing text content and one or more image files using multipart/form-data."
+---
+
+**POST** `/notes/`
+
+Creates a new note containing **text/HTML content** plus **image attachments**.  
+The request must be sent as **multipart/form-data**.  
+Images will be uploaded and included inside the note’s item as HTML `<attachment-embed>` blocks.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format           | Required | Description |
+|--------------|-------------------------|----------|-------------|
+| Authorization | `Token <token>`        | Yes      | User authentication token |
+| Content-Type  | `multipart/form-data`  | Yes      | Required for file uploads |
+
+---
+
+## 🧩 Form-Data Fields
+
+| Field       | Datatype | Required | Description |
+|-------------|----------|----------|-------------|
+| note_uuid   | string   | Yes      | UUID for the new note |
+| item_uuid   | string   | Yes      | UUID for the note item being created |
+| title       | string   | Yes      | Title of the note |
+| category    | number   | Yes      | Category ID assigned to the note |
+| content     | string   | Yes      | HTML/text content for the note item |
+| file        | file     | Yes      | One or more image attachments (`png`, `jpg`, `jpeg` etc.) |
+
+---
+
+## 📝 Example Form-Data (JSON Representation)
+
+```json
+[
+  {
+    "key": "file",
+    "type": "file",
+    "value": [
+      "/C:/Users/sarsr/Desktop/kdeconnect/IMG_20250329_105243_643.jpg",
+      "/C:/Users/rssam/Pictures/Screenshots/Screenshot 2025-11-13 142332.png"
+    ]
+  },
+  {
+    "key": "note_uuid",
+    "value": "11ea8512-a72d-4868-9eff-ccefad1659b0",
+    "type": "text"
+  },
+  {
+    "key": "item_uuid",
+    "value": "6ca9f5c3-cd88-490d-a7bd-444c171dbea9",
+    "type": "text"
+  }
+]
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/notes/" \
+  -H "Authorization: Token <token>" \
+  -F "note_uuid=11ea8512-a72d-4868-9eff-ccefad1659b0" \
+  -F "item_uuid=6ca9f5c3-cd88-490d-a7bd-444c171dbea9" \
+  -F "title=My Note Title" \
+  -F "category=2" \
+  -F "content=This is my note content" \
+  -F "file=@image1.jpg" \
+  -F "file=@image2.png"
+```
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "item_uuid": "6ca9f5c3-cd88-490d-a7bd-444c171dbea9",
+    "content": "<div class=\"attachment-embed\" ...>...</div>",
+    "order": 1,
+    "attachment": [
+        {
+            "id": 1457,
+            "url": "https://s3.../image1.png",
+            "type": "image",
+            "size": 78062,
+            "name": "IMG_20250329_105243_643.jpg",
+            "created_at": "2025-11-17T09:37:24.349466Z"
+        },
+        {
+            "id": 1458,
+            "url": "https://s3.../image2.png",
+            "type": "image",
+            "size": 102444,
+            "name": "Screenshot 2025-11-13 142332.png",
+            "created_at": "2025-11-17T09:37:24.500000Z"
+        }
+    ],
+    "ai_content_items": [],
+    "created_at": "2025-11-17T09:37:22.262058Z",
+    "updated_at": "2025-11-17T09:37:24.386422Z"
+}
+```
+
+---
+
+# 📦 Response Body Fields
+
+| Field            | Datatype | Required | Description |
+|------------------|----------|----------|-------------|
+| item_uuid        | string   | Yes      | Unique identifier of the created note item |
+| content          | string   | Yes      | Text/HTML content including embedded image HTML |
+| order            | number   | Yes      | Position of the item inside the note |
+| attachment       | array    | Yes      | List of uploaded image metadata |
+| ai_content_items | array    | Yes      | AI-generated enrichments (if any) |
+| created_at       | string   | Yes      | Timestamp of creation |
+| updated_at       | string   | Yes      | Timestamp of last update |
+
+---
+
+# 📎 Attachment Object Structure
+
+| Field       | Datatype | Required | Description |
+|-------------|----------|----------|-------------|
+| id          | number   | Yes      | Attachment ID |
+| url         | string   | Yes      | Public URL of uploaded image |
+| type        | string   | Yes      | Always `"image"` for this endpoint |
+| size        | number   | Yes      | File size in bytes |
+| name        | string   | Yes      | Original file name |
+| created_at  | string   | Yes      | Upload timestamp |
+
+---
+
+

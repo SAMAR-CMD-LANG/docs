@@ -1,0 +1,101 @@
+---
+title: "Create New Journal (Text)"
+description: "Creates a text-based journal entry for a specific date."
+---
+
+**POST** `/journals/{date}/`
+
+This endpoint creates a **new journal entry** for the specified date.  
+Only the authenticated user can create journal entries.
+
+If a journal already exists for that date, the backend may update or overwrite it depending on the server logic.
+
+This version accepts **text-only** journal entries (no attachments).
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format         | Required | Description |
+|---------------|----------------------|----------|-------------|
+| Authorization | `Token <token>`      | Yes      | User authentication token |
+| Content-Type  | `application/json`   | Yes      | JSON request body |
+
+---
+
+## 📝 Request Body Parameters
+
+| Field   | Datatype | Required | Description |
+|---------|----------|----------|-------------|
+| content | string   | Yes      | The journal entry text for the specified date |
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+  "content": "im not as well read as i would like to be. Im not as jacked as I would like to be. I'm not as rich as I would like to be. Do i reduce my expections, or do I change myself?"
+}
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/journals/2025-09-09/" \
+  -H "Authorization: Token 6a0110..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "im not as well read as i would like to be. Im not as jacked as I would like to be. I'm not as rich as I would like to be. Do i reduce my expections, or do I change myself?"
+  }'
+```
+
+---
+
+# 🧩 Response Object Fields
+
+| Field        | Datatype | Required | Description |
+|--------------|----------|----------|-------------|
+| journal_uuid | string   | Yes      | Unique identifier for the journal entry |
+| content      | string   | Yes      | The saved journal content |
+| date         | string   | Yes      | The journal date (YYYY-MM-DD) |
+| attachment   | array    | Yes      | List of attachments (empty for text journals) |
+| created_at   | string   | Yes      | Timestamp when the journal was created |
+| updated_at   | string   | Yes      | Timestamp when the journal was last updated |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "journal_uuid": "ac7ad6cf-56c3-40bc-a18b-609b2e524940",
+    "content": "im not as well read as i would like to be. Im not as jacked as I would like to be. I'm not as rich as I would like to be. Do i reduce my expections, or do I change myself?",
+    "date": "2025-09-09",
+    "attachment": [],
+    "created_at": "2025-11-16T06:44:36.473134Z",
+    "updated_at": "2025-11-16T06:44:36.473153Z"
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing content or invalid date |
+| 401 Unauthorized | Missing or invalid token |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Journals are stored per date and user.  
+- If multiple entries per date are not supported, this may update the existing entry.  
+- This endpoint handles **text-only journaling**.  
+- For image/audio journals, use the other endpoints.
+

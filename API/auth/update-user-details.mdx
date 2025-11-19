@@ -1,0 +1,141 @@
+---
+title: "Update User Info"
+description: "Updates the authenticated user’s profile details such as first name, last name, and profile picture using multipart/form-data."
+---
+
+**PATCH** `/auth/user`
+
+This endpoint updates the authenticated user’s profile information.  
+It requires a valid authentication token and **multipart/form-data** since profile picture uploads involve file input.
+
+### Key Notes:
+- The request **must** be sent as `multipart/form-data`.
+- Only fields included in the form will be updated.
+- `profilepic` must be sent as a real file (image) — **not base64**.
+- A valid `Authorization: Token <token>` header is required.
+
+---
+
+## 🔐 Required Headers
+
+| Header        | Datatype | Required | Description |
+|--------------|----------|----------|-------------|
+| Authorization | string   | Yes      | Must include: `Token <user_token>`. |
+| Content-Type  | string   | Yes      | Must be `multipart/form-data` because the request contains file upload. |
+
+---
+
+## 📝 Request Body Parameters (multipart/form-data)
+
+| Field       | Datatype        | Required | Description |
+|-------------|-----------------|----------|-------------|
+| first_name  | string          | No       | Updated first name of the user. |
+| last_name   | string          | No       | Updated last name of the user. |
+| profilepic  | file (image)    | No       | Image file (jpg, png, jpeg). |
+
+---
+
+## 📌 Example Headers
+
+```bash
+Authorization: Token 6a0110b06109fbf2e3a7046e4ace26a7c7ed3cda
+Content-Type: multipart/form-data
+```
+
+---
+
+## 📮 Example cURL (Multipart Form)
+
+```bash
+curl -X PATCH "https://your-api.com/auth/user" \
+  -H "Authorization: Token 6a0110b06109fbf2e3a7046e4ace26a7c7ed3cda" \
+  -F "first_name=samarjeeth" \
+  -F "last_name=RS" \
+  -F "profilepic=@/path/to/image.jpg"
+```
+
+---
+
+
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "uuid": "a32dd6a8-24ec-4c27-b8a7-9cbcb4ad1340",
+    "email": "samarjith.r@senatio.com",
+    "first_name": "samarjeeth",
+    "last_name": "RS",
+    "profilepic": null,
+    "usage": {
+        "credit_balance": 25,
+        "earned_credits": 0,
+        "remaining_tool_calls": 0,
+        "is_free_user": true
+    },
+    "plan_info": {
+        "active_plans": [],
+        "upcoming_plans": [],
+        "currency": null
+    },
+    "timezone": null
+}
+```
+
+---
+
+# 🧩 User Object Documentation
+
+## Top-Level Fields
+
+| Field       | Datatype    | Nullable | Description |
+|-------------|-------------|----------|-------------|
+| uuid        | string      | No       | Unique identifier of the user. |
+| email       | string      | No       | Registered email of the user. |
+| first_name  | string      | No       | Updated first name. |
+| last_name   | string      | No       | Updated last name. |
+| profilepic  | string/null | Yes      | URL of uploaded profile picture. |
+| timezone    | null        | Yes      | User’s timezone. |
+
+---
+
+## Usage Object
+
+| Field                   | Datatype | Nullable | Description |
+|-------------------------|----------|----------|-------------|
+| credit_balance          | number   | No       | Total remaining credits. |
+| earned_credits          | number   | No       | Credits earned by the user. |
+| remaining_tool_calls    | number   | No       | Remaining allowed tool calls. |
+| is_free_user            | boolean  | No       | Whether user is on a free plan. |
+
+---
+
+## Plan Info Object
+
+| Field           | Datatype | Nullable | Description |
+|------------------|----------|----------|-------------|
+| active_plans     | array    | Yes      | Currently active subscription plans. |
+| upcoming_plans   | array    | Yes      | Scheduled future subscription plans. |
+| currency         | string   | Yes      | Billing currency. |
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing fields or invalid file upload. |
+| 401 Unauthorized | Missing or invalid token. |
+| 415 Unsupported Media Type | Sent request as JSON instead of multipart/form-data. |
+| 500 Internal Server Error | Unexpected backend issue. |
+
+---
+
+# 📘 Notes
+
+- Always send form-data for file uploads.  
+- Do not send base64 images — only real file uploads.  
+- Only supplied fields are updated; missing fields stay unchanged.  
+

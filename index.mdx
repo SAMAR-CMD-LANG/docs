@@ -1,0 +1,179 @@
+---
+title: "Introduction"
+description: "Learn how to use the Samantha API — the backend powering the mysamantha.ai personal assistant."
+---
+
+# Welcome to the Samantha API
+
+The Samantha API powers the features behind **mysamantha.ai**, your intelligent personal assistant for managing notes, tasks, journals, reminders, analytics, and more.
+
+This documentation will help you understand how Samantha organizes your data and how each feature interacts behind the scenes.  
+It is intended for users who want to view, manage, or integrate their Samantha data programmatically.  
+This is **not** a platform for building full third-party apps — instead, it gives you controlled, authenticated access to your Samantha account’s data.
+
+---
+
+## 🚀 Getting Started
+
+Set up your authentication and make your first API call.
+
+<Card
+  title="Start Here"
+  icon="rocket"
+  href="/api/auth/register-new-user"
+  horizontal
+>
+  Begin with user authentication—register, log in, and access your personal data
+  securely.
+</Card>
+
+---
+
+## 🧠 What Samantha API Offers
+
+Use these endpoints to interact with the same systems that power mysamantha.ai.
+
+<Columns cols={2}>
+
+{" "}
+<Card title="Notes" icon="note-sticky" href="/api/notes/get-notes">
+  Create and manage your personal notes, attachments, items, and labels.
+</Card>
+
+{" "}
+<Card title="Tasks" icon="list-check" href="/api/tasks/get-tasks">
+  Access your to-dos, task lists, reminders, and smart assistant features.
+</Card>
+
+{" "}
+<Card title="Journals" icon="book" href="/api/journal/new-journal-text">
+  View and record your daily entries — text, audio, or images.
+</Card>
+
+{" "}
+<Card title="Analytics" icon="chart-line" href="/api/core/user-streak">
+  Retrieve personal insights like streaks, usage statistics, and activity
+  summaries.
+</Card>
+
+{" "}
+<Card
+  title="FCM Notifications"
+  icon="mobile-screen"
+  href="/api/fcm/add-registration-token"
+>
+  Register your device to receive push notifications from Samantha.
+</Card>
+
+{" "}
+<Card title="Notion Sync" icon="notebook" href="/api/notes/notion/authorize">
+  Connect Samantha with your Notion workspace to sync notes.
+</Card>
+
+</Columns>
+
+---
+
+## ✨ Popular Personal Assistant Features
+
+<Card
+  title="Smart Task Creation (Sam)"
+  icon="sparkles"
+  href="/api/tasks/create-with-sam"
+  horizontal
+>
+  Ask Samantha to create tasks in natural language — the same AI assistant
+  behavior you experience in the app.
+</Card>
+
+<Columns cols={2}>
+
+{" "}
+<Card
+  title="Universal Transcription"
+  icon="microphone"
+  href="/api/core/universal-transcribe-endpoint"
+>
+  Upload audio and let Samantha convert it to text.
+</Card>
+
+{" "}
+<Card
+  title="Bulk Management"
+  icon="boxes-stacked"
+  href="/api/tasks/bulk-delete"
+>
+  Clean up tasks, reminders, notes, or lists efficiently.
+</Card>
+
+</Columns>
+
+---
+
+## 🔐 Authentication & Security
+
+<Columns cols={2}>
+
+{" "}
+<Card title="User Login & Tokens" icon="key" href="/api/auth/user-login">
+  Learn how Samantha secures your account using token-based authentication.
+</Card>
+
+{" "}
+<Card
+  title="Magic Link Access"
+  icon="envelope"
+  href="/api/auth/send-magic-link"
+>
+  Use email-based instant login, just like in the app.
+</Card>
+
+{" "}
+<Card
+  title="Social Login"
+  icon="share-nodes"
+  href="/api/auth/google-oauth-login"
+>
+  Connect through Google or Apple, similar to mysamantha.ai.
+</Card>
+
+{" "}
+<Card
+  title="Use Your Own API Key"
+  icon="key-skeleton"
+  href="/api/core/api-byok"
+>
+  Supply your personal provider key for AI-driven features.
+</Card>
+
+</Columns>
+
+---
+
+## 📘 Developer-Friendly Tools
+
+<Columns cols={2}>
+
+{" "}
+<Card title="Code Samples" icon="code" href="/api-reference/endpoint/create">
+  See how to structure requests using your preferred language.
+</Card>
+
+{" "}
+<Card
+  title="Error Format"
+  icon="triangle-exclamation"
+  href="/api-reference/introduction"
+>
+  Understand error responses and recommended handling.
+</Card>
+
+</Columns>
+
+---
+
+## ⭐ Want to explore mysamantha.ai?
+
+<Card title="Visit mysamantha.ai" icon="stars" href="https://mysamantha.ai">
+  Discover the personal assistant these APIs support.
+</Card>

@@ -1,0 +1,100 @@
+---
+title: "Update User Preferences"
+description: "Updates preference settings for the authenticated user."
+---
+
+**PUT** `/preferences/`
+
+This endpoint updates the **user’s preference settings**.  
+Only the authenticated user can modify their own preferences.
+
+The request accepts JSON and returns the updated preference values.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format         | Required | Description |
+|---------------|----------------------|----------|-------------|
+| Authorization | `Token <token>`      | Yes      | User authentication token |
+| Content-Type  | `application/json`   | Yes      | JSON request body |
+
+---
+
+## 📝 Request Body Parameters
+
+| Field                        | Datatype | Required | Description |
+|------------------------------|----------|----------|-------------|
+| auto_archive_completed_tasks | boolean  | Yes      | Enables/disables auto-archiving of completed tasks |
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+    "auto_archive_completed_tasks": false
+}
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X PUT "https://your-api.com/preferences/" \
+  -H "Authorization: Token 6a0110..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "auto_archive_completed_tasks": false
+  }'
+```
+
+---
+
+## 💡 Example JavaScript (fetch)
+
+```javascript
+fetch("https://your-api.com/preferences/", {
+  method: "PUT",
+  headers: {
+    "Authorization": "Token 6a0110...",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    auto_archive_completed_tasks: false
+  })
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+---
+
+# 🧩 Successful Response (200 OK)
+
+```json
+{
+    "auto_archive_completed_tasks": false,
+    "auto_archive_cancelled_tasks": true
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing or invalid fields |
+| 401 Unauthorized | Missing or invalid token |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Only fields included in the request will be updated.  
+- Preferences may expand over time (e.g., additional automation or display settings).  
+- The response always returns the **full updated preference object**.
+

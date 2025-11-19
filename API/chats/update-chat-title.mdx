@@ -1,0 +1,134 @@
+---
+title: "Update Chat Session Title"
+description: "Updates the title of an existing chat session for the authenticated user."
+---
+
+**PATCH** `/chats/sessions/{session_id}/`
+
+This endpoint allows the authenticated user to **update the title** of an existing chat session.  
+Only the **session owner** is authorized to update their chat session.
+
+A valid authentication token and JSON request body are required.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format         | Required | Description |
+|---------------|----------------------|----------|-------------|
+| Authorization | `Token <token>`      | Yes      | Auth token of the logged-in user |
+| Content-Type  | `application/json`   | Yes      | Ensures the request body is JSON |
+
+---
+
+## 📝 Request Body Parameters
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| title  | string   | Yes      | New title for the chat session |
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+    "title": "Tu lele meri jaan  lala"
+}
+```
+
+---
+
+## 🧩 Example URL
+
+```
+PATCH {{base_url}}/chats/sessions/25dc6c83-a873-43d5-a862-45c881817cb6/
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X PATCH "https://your-api.com/chats/sessions/25dc6c83-a873-43d5-a862-45c881817cb6/" \
+  -H "Authorization: Token 6a0110..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Tu lele meri jaan  lala"
+  }'
+```
+
+---
+
+## 💡 Example JavaScript (fetch)
+
+```javascript
+const sessionId = "25dc6c83-a873-43d5-a862-45c881817cb6";
+
+fetch(`https://your-api.com/chats/sessions/${sessionId}/`, {
+  method: "PATCH",
+  headers: {
+    "Authorization": "Token 6a0110...",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    title: "Tu lele meri jaan  lala"
+  })
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+---
+
+# 🧩 Updated Chat Session Object Fields
+
+| Field         | Datatype     | Required | Description |
+|---------------|--------------|----------|-------------|
+| session_uuid  | string       | Yes      | Unique identifier for the chat session |
+| title         | string       | Yes      | Updated chat session title |
+| created_at    | string       | Yes      | Timestamp when session was created |
+| updated_at    | string       | Yes      | Timestamp of this update |
+| is_pinned     | boolean      | Yes      | Indicates if the session is pinned |
+| persona_name  | string/null  | No       | Name of persona used (if any) |
+| is_pending    | boolean      | Yes      | Indicates if the session is pending/processing |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "message": "chat session updated",
+    "updated_chatsession": {
+        "session_uuid": "25dc6c83-a873-43d5-a862-45c881817cb6",
+        "title": "Tu lele meri jaan  lala",
+        "created_at": "2025-11-14T13:55:58.343325Z",
+        "updated_at": "2025-11-14T14:01:06.977792Z",
+        "is_pinned": false,
+        "persona_name": null,
+        "is_pending": false
+    }
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing or invalid title. |
+| 401 Unauthorized | Missing or invalid token. |
+| 403 Forbidden | User does not own the chat session. |
+| 404 Not Found | Chat session does not exist. |
+| 500 Internal Server Error | Unexpected backend issue. |
+
+---
+
+# 📘 Notes
+
+- Only the session owner can update the title.  
+- The frontend should update the session list after renaming.  
+- The `updated_at` timestamp always changes when title is updated.
+

@@ -1,0 +1,145 @@
+---
+title: "Apple Sign-In Login"
+description: "Authenticate users using Apple Sign-In via the id_token returned by Apple."
+---
+
+
+
+**POST** `/auth/social-login/`
+
+This endpoint authenticates users using **Apple Sign-In**.  
+The client must send the Apple-generated **id_token** along with `"provider": "apple"` to verify the user.
+
+After validation, the server will either:
+
+- Create a new user (if first login), or  
+- Log in the existing user  
+
+Then the backend returns:
+
+- An application-level **session token**
+- The **full user profile**
+
+---
+
+## 📝 Request Body Parameters
+
+| Field       | Datatype | Required | Description |
+|-------------|----------|----------|-------------|
+| provider    | string   | Yes      | Must be `"apple"` to indicate Apple social login. |
+| access_token | string  | No       | Optional Apple access token (some configurations send it). |
+| id_token    | string   | Yes      | The JWT ID token returned by Apple Sign-In, containing user identity information. |
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+    "provider": "apple",
+    "access_token": "string",
+    "id_token": "eyJraWQiOiJyczBNM2tPVjlwIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiY29tLnplbXVyaWEuc2FtLXRlc3QtdHMuc2kiLCJleHAiOjE3NDU2NjI0MDUsImlhdCI6MTc0NTU3NjAwNSwic3ViIjoiMDAxNTQ5LjFhMjFjNGNmODkwODRkMDc5NzA0YjExZWZkMDRkM2I3LjA4NDMiLCJhdF9oYXNoIjoiX3JyLTc2VnExMGtaRTFiYnBobEFKdyIsImVtYWlsIjoic2FyLnNyaWphbkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXV0aF90aW1lIjoxNzQ1NTc2MDAzLCJub25jZV9zdXBwb3J0ZWQiOnRydWV9.RlYgHHxGTfJp6w7S1J7IgJBlXueNFVSdC6oIFN2GjBrjeT1pzv_p-5rGjWLZZoxorwZMDjBIY-qqQNRrv4vLO6muiip8xr_YYk09HUvgGZMFOM1FYpuM5CXbmEvpafd22j66hNQCsCTXYlE-6v_iNKc5PHiqek68WABPzajmd94WSRzR8FNEiU7G6wPg442fh8JDGDlAZ4oSoaSoAsZ-ZILNATsA8DIq3kXX8eWbujNcxeCUBep3rYMBogaWaHkCpQxe_fSdmnbF5qsH8QcJBLhKZQ73ObXhIhoo_7PyqMGUQrQ3ihlg7UsFR0VHM_gZ6JWIhqMvHls2B4IpWNQHng"
+}
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/auth/social-login/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "apple",
+    "access_token": "string",
+    "id_token": "eyJraWQiOiJyczBNM2tPVjlwIiwiYWxnIjoiUlMyNTYifQ..."
+  }'
+```
+
+---
+
+
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "token": "string",
+    "user": {
+        "uuid": "string",
+        "email": "user@gmail.com",
+        "first_name": "string or null",
+        "last_name": "string or null",
+        "profilepic": null,
+        "usage": {
+            "credit_balance": 25,
+            "earned_credits": 0,
+            "remaining_tool_calls": 0,
+            "is_free_user": true
+        },
+        "plan_info": {
+            "active_plans": [],
+            "upcoming_plans": [],
+            "currency": null
+        },
+        "timezone": null
+    }
+}
+```
+
+---
+
+# 🧩 Full User Object Documentation
+
+### Top-Level User Fields
+
+| Field        | Datatype        | Nullable | Description |
+|--------------|-----------------|----------|-------------|
+| uuid         | string          | No       | Unique identifier of the user. |
+| email        | string          | No       | User’s registered email address. |
+| first_name   | string/null     | Yes      | User’s first name (may be null for Apple login). |
+| last_name    | string/null     | Yes      | User’s last name (may be null for Apple login). |
+| profilepic   | string/null     | Yes      | URL of user’s profile picture. |
+| timezone     | string/null     | Yes      | User’s timezone. |
+
+---
+
+### Usage Object (`usage`)
+
+| Field                   | Datatype | Nullable | Description |
+|-------------------------|----------|----------|-------------|
+| credit_balance          | number   | No       | User’s remaining credits. |
+| earned_credits          | number   | No       | Credits earned by the user. |
+| remaining_tool_calls    | number   | No       | Remaining API/tool calls allowed. |
+| is_free_user            | boolean  | No       | Indicates if the user is on a free plan. |
+
+---
+
+### Plan Info Object (`plan_info`)
+
+| Field           | Datatype | Nullable | Description |
+|------------------|----------|----------|-------------|
+| active_plans     | array    | Yes      | List of active subscription plans. |
+| upcoming_plans   | array    | Yes      | Future scheduled subscription plans. |
+| currency         | string   | Yes      | Billing currency. |
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Required fields missing or improperly formatted. |
+| 401 Unauthorized | Invalid or expired Apple id_token. |
+| 500 Internal Server Error | Unexpected backend error. |
+
+---
+
+# 📘 Notes
+
+- Apple sends user details **only on the first login**.  
+- The backend must validate the `id_token` signature against Apple’s public keys.  
+- The returned `"token"` is your backend’s session token, not Apple’s token.  
+

@@ -1,0 +1,49 @@
+---
+title: Create New Section
+---
+
+### **POST /tasks/lists/{list_uuid}/sections/**
+
+Creates a new section inside the specified task list.
+
+---
+
+## **Headers**
+
+| Key | Value | Required | Description |
+|-----|--------|----------|-------------|
+| Authorization | Token `<token>` | Yes | User authentication token |
+| Content-Type | application/json | Yes | JSON request body |
+
+---
+
+## **Request Body**
+
+```json
+{
+  "name": "home tasks"
+}
+```
+
+## **Successful Response**
+```json
+{
+  "uuid": "d1b8cb42-1ba6-451d-888d-2eb186751d2a",
+  "name": "home tasks",
+  "list_uuid": "b001c3af-b6eb-498d-a2f6-8f4d2cc9dc39",
+  "list_name": "project 3",
+  "order": 0
+}
+```
+
+---
+## Response Fields
+
+| Field     | Type   | Description |
+|-----------|--------|-------------|
+| uuid      | string | Unique identifier of the section |
+| name      | string | Name of the section |
+| list_uuid | string | UUID of the parent task list |
+| list_name | string | Name of the parent task list |
+| order     | number | The section’s position/order in the list |
+---

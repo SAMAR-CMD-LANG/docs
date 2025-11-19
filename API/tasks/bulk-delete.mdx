@@ -1,0 +1,57 @@
+---
+title: "Bulk Delete Tasks"
+description: "Delete multiple tasks in a single request. Only authenticated users can delete their own tasks."
+---
+
+# DELETE `/tasks/tasks/bulk-delete/`
+
+Deletes multiple tasks at once.  
+Useful for batch cleanup operations.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|-----|--------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 📤 Request Body
+
+| Field | Type | Required | Description |
+|--------|--------|----------|-------------|
+| task_uuids | Array of UUIDs | Yes | List of task UUIDs to delete |
+
+### Example Request Body
+
+```json
+{
+  "task_uuids": [
+    "8ffc8c92-397b-482a-91b9-e05d32374730",
+    "ccbf445a-e18e-46ba-b688-4ea75cb98807"
+  ]
+}
+```
+---
+## **Example Response Body**
+```json
+{
+  "detail": "Successfully deleted 2 tasks.",
+  "deleted_count": 2,
+  "deleted_uuids": [
+    "8ffc8c92-397b-482a-91b9-e05d32374730",
+    "ccbf445a-e18e-46ba-b688-4ea75cb98807"
+  ]
+}
+```
+---
+---
+## **Response Body Fields**
+| Field         | Type    | Description              |
+|---------------|---------|--------------------------|
+| detail        | String  | Status message           |
+| deleted_count | Number  | Number of tasks deleted  |
+| deleted_uuids | Array   | List of UUIDs deleted    |
+---

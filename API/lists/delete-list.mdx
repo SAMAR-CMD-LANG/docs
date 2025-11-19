@@ -1,0 +1,24 @@
+---
+title: "Delete Task List"
+description: "Delete a specific task list using its UUID."
+---
+
+**DELETE** `/tasks/lists/{list_uuid}/`
+
+Deletes a specific task list owned by the authenticated user.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format   | Required | Description |
+|---------------|----------------|----------|-------------|
+| Authorization | Token `<token>`  | Yes      | User authentication token |
+
+---
+
+## 📮 Example Request
+
+```http
+DELETE {{base_url}}tasks/lists/7a37be9e-80de-4efe-a477-d15bddcca937/
+Authorization: Token <token>

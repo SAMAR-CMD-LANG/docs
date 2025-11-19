@@ -1,0 +1,47 @@
+---
+title: "Delete Label"
+description: "Permanently delete a label by its unique identifier."
+---
+
+**DELETE** `/notes/labels/{label_uuid}/`
+
+Deletes a label with the specified `label_uuid`.  
+Only authenticated users can delete their labels.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format  | Required | Description |
+|--------------|----------------|----------|-------------|
+| Authorization | Token `<token>` | Yes      | Authentication token |
+
+---
+
+## 📮 Example Request
+
+```bash
+DELETE {{base_url}}notes/labels/24a7aedc-975d-4f6d-8147-1cc46c6fcc93/
+Authorization: Token <token>
+```
+
+---
+
+## ✅ Successful Response (200 OK)
+
+```json
+{
+    "message": "Label 'Very Important' (24a7aedc-975d-4f6d-8147-1cc46c6fcc93) deleted successfully."
+}
+```
+
+---
+
+## 📦 Response Fields
+
+| Field   | Type   | Description |
+|---------|--------|-------------|
+| message | string | Confirmation message describing the deleted label |
+
+---
+

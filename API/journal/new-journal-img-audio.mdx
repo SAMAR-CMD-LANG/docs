@@ -1,0 +1,120 @@
+---
+title: "Create New Journal (Text + Images)"
+description: "Creates a journal entry for a specific date with both text content and one or more image attachments."
+---
+
+**POST** `/journals/{date}/`
+
+This endpoint creates a journal entry that contains **both text content and one or more image attachments**.  
+It accepts **multipart/form-data** because the request includes file uploads.
+
+Only authenticated users can create combined text-and-image journals.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format          | Required | Description |
+|---------------|-----------------------|----------|-------------|
+| Authorization | `Token <token>`       | Yes      | User authentication token |
+| Content-Type  | `multipart/form-data` | Yes      | Required for uploading images |
+
+---
+
+## 📝 Form-Data Fields
+
+| Field      | Datatype | Required | Description |
+|------------|----------|----------|-------------|
+| content    | string   | Yes      | Text content of the journal entry |
+| attachment | file     | Yes      | One or more images (`png`, `jpg`, `jpeg`, etc.) |
+
+---
+
+## 📌 Example Form-Data
+
+| Key        | Type | Value        |
+|------------|------|--------------|
+| content    | text | this is some content |
+| attachment | file | image1.png   |
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/journals/2025-06-02/" \
+  -H "Authorization: Token 6a0110..." \
+  -F "content=this is some content" \
+  -F "attachment=@/path/to/image1.png"
+```
+
+---
+
+# 🧩 Response Body Fields
+
+| Field        | Datatype | Required | Description |
+|--------------|----------|----------|-------------|
+| journal_uuid | string   | Yes      | Unique identifier of the journal entry |
+| content      | string   | Yes      | Journal text content |
+| date         | string   | Yes      | Date of entry (YYYY-MM-DD) |
+| attachment   | array    | Yes      | List of uploaded image metadata |
+| created_at   | string   | Yes      | Timestamp of creation |
+| updated_at   | string   | Yes      | Timestamp of last update |
+
+---
+
+# 🧩 Attachment Object Fields
+
+| Field      | Datatype | Required | Description |
+|------------|----------|----------|-------------|
+| id         | number   | Yes      | Attachment ID |
+| url        | string   | Yes      | Public image URL |
+| type       | string   | Yes      | Always `"image"` |
+| size       | number   | Yes      | Size in bytes |
+| name       | string   | Yes      | Original file name |
+| created_at | string   | Yes      | File upload timestamp |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "journal_uuid": "11e88ab8-df0b-42d9-bd83-9102935f70c2",
+    "content": "this is some content",
+    "date": "2025-06-02",
+    "attachment": [
+        {
+            "id": 1455,
+            "url": "https://s3.ap-southeast-1.wasabisys.com/samantha/media/image/5d5aa992-f25b-4bcb-8e9a-c3bf6f6e9251.png",
+            "type": "image",
+            "size": 2295,
+            "name": "Screenshot 2025-11-13 120341.png",
+            "created_at": "2025-11-17T06:43:22.073742Z"
+        }
+    ],
+    "created_at": "2025-11-17T06:43:22.080786Z",
+    "updated_at": "2025-11-17T06:43:22.080814Z"
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing required fields (`content` or `attachment`) |
+| 401 Unauthorized | Invalid or missing token |
+| 415 Unsupported Media Type | Non-image file uploaded |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Multiple images are supported (`attachment` can be repeated in form-data).  
+- `content` cannot be empty for this endpoint.  
+- Attachments include metadata for each uploaded file.  
+- Ideal for journaling with both **text and visual elements**.
+

@@ -1,0 +1,40 @@
+---
+title: "Delete Comment"
+description: "Delete an existing comment from a shared note."
+---
+
+# DELETE `/notes/share/{note_uuid}/comments/{comment_uuid}/`
+
+Delete an existing comment from a shared note.  
+Only authenticated users can delete comments they own.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔗 Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|--------|----------|-------------|
+| note_uuid | UUID | Yes | ID of the shared note |
+| comment_uuid | UUID | Yes | ID of the comment to delete |
+
+---
+
+## 📤 Request Body
+There is **no request body** for this endpoint.
+
+---
+
+## 📥 Response — 204 No Content
+
+The endpoint returns **no response body**.
+
+```text
+<no response body>

@@ -1,0 +1,126 @@
+---
+title: "Update Journal Content"
+description: "Updates only the text content of an existing journal entry while keeping attachments unchanged."
+---
+
+**PATCH** `/journals/{journal_uuid}/`
+
+This endpoint updates **only the journal content** of an existing journal entry.  
+Attachments such as images or audio remain unchanged.
+
+Only the authenticated user can update their own journals.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format        | Required | Description |
+|---------------|---------------------|----------|-------------|
+| Authorization | `Token <token>`     | Yes      | User authentication token |
+| Content-Type  | `application/json`  | Yes      | JSON request body |
+
+---
+
+## 📝 Request Body Fields
+
+| Field   | Datatype | Required | Description |
+|---------|----------|----------|-------------|
+| content | string   | Yes      | New text content to replace the existing journal content |
+
+---
+
+## 📌 Example Request
+
+URL:
+
+```
+{{base_url}}journals/11e88ab8-df0b-42d9-bd83-9102935f70c2/
+```
+
+Body:
+
+```json
+{
+  "content": "This is the updated content via PATCH."
+}
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X PATCH "https://your-api.com/journals/11e88ab8-df0b-42d9-bd83-9102935f70c2/" \
+  -H "Authorization: Token 6a0110..." \
+  -H "Content-Type: application/json" \
+  -d '{"content": "This is the updated content via PATCH."}'
+```
+
+---
+
+# 🧩 Response Body Fields
+
+| Field        | Datatype | Required | Description |
+|--------------|----------|----------|-------------|
+| journal_uuid | string   | Yes      | Unique identifier of the journal entry |
+| content      | string   | Yes      | Updated text content |
+| date         | string   | Yes      | Journal entry date |
+| attachment   | array    | Yes      | Image/audio metadata (remains unchanged) |
+| created_at   | string   | Yes      | Timestamp when the journal was created |
+| updated_at   | string   | Yes      | Timestamp of last update |
+
+---
+
+# 🧩 Attachment[] Object Fields
+
+| Field      | Datatype | Required | Description |
+|------------|----------|----------|-------------|
+| id         | number   | Yes      | Attachment ID |
+| url        | string   | Yes      | Public URL of the attachment |
+| type       | string   | Yes      | `"image"` or `"audio"` |
+| size       | number   | Yes      | File size (bytes) |
+| name       | string   | Yes      | Original file name |
+| created_at | string   | Yes      | Upload timestamp |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "journal_uuid": "11e88ab8-df0b-42d9-bd83-9102935f70c2",
+    "content": "This is the updated content via PATCH.",
+    "date": "2025-06-02",
+    "attachment": [
+        {
+            "id": 1455,
+            "url": "https://s3.ap-southeast-1.wasabisys.com/samantha/media/image/5d5aa992-f25b-4bcb-8e9a-c3bf6f6e9251.png",
+            "type": "image",
+            "size": 2295,
+            "name": "Screenshot 2025-11-13 120341.png",
+            "created_at": "2025-11-17T06:43:22.073742Z"
+        }
+    ],
+    "created_at": "2025-11-17T06:43:22.080786Z",
+    "updated_at": "2025-11-17T07:05:38.554099Z"
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing field `content` |
+| 401 Unauthorized | Invalid or missing token |
+| 404 Not Found | Journal UUID not found |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Only `content` is updated — **attachments cannot be changed via this endpoint**.  
+- Use this when users want to correct or rewrite their journal entry without altering uploaded files.
+

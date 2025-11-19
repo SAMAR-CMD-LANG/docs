@@ -1,0 +1,104 @@
+---
+title: "Get User Streak"
+description: "Retrieves the user's streak information, including consecutive active days and earned rewards."
+---
+
+**GET** `/streaks/`
+
+This endpoint retrieves the authenticated user’s **current activity streak**.  
+A streak represents **consecutive days of user activity**, and may reward the user with additional credits.
+
+A valid authentication token is required.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format         | Required | Description |
+|---------------|----------------------|----------|-------------|
+| Authorization | `Token <token>`      | Yes      | User authentication token |
+
+---
+
+## 📝 Request Body
+
+No request body is required.
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| (none) | —        | —        | The endpoint does not take any request body |
+
+---
+
+## 📌 Example Request
+
+```
+GET {{base_url}}/streaks/
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/streaks/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+## 💡 Example JavaScript (fetch)
+
+```javascript
+fetch("https://your-api.com/streaks/", {
+  method: "GET",
+  headers: {
+    "Authorization": "Token 6a0110..."
+  }
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+---
+
+# 🧩 Response Object Fields
+
+| Field     | Datatype | Required | Description |
+|-----------|----------|----------|-------------|
+| streak    | number   | Yes      | Number of consecutive active days |
+| earned    | number   | Yes      | Credits earned from streak rewards |
+| last_used | string   | Yes      | Date of last activity (YYYY-MM-DD) |
+| active    | boolean  | Yes      | Indicates whether the streak is currently active |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "streak": 1,
+    "earned": 5,
+    "last_used": "2025-11-16",
+    "active": true
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 401 Unauthorized | Missing or invalid token |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Streaks are tied to daily user activity.  
+- Breaking a streak resets the streak count to zero.  
+- The `earned` field helps gamify the experience by rewarding user consistency.
+

@@ -1,0 +1,102 @@
+---
+title: "Create New Journal (Audio)"
+description: "Creates a journal entry with an audio attachment, with optional automatic transcription."
+---
+
+**POST** `/journals/{date}/`
+
+This endpoint creates a **journal entry with an audio attachment** for a specific date.  
+It accepts **multipart/form-data** and supports optional transcription of the audio file.
+
+Only the authenticated user can create audio journals.
+
+If `"transcribe": "true"` is passed, the backend will automatically transcribe the audio and store the generated text in the `content` field.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format         | Required | Description |
+|---------------|----------------------|----------|-------------|
+| Authorization | `Token <token>`      | Yes      | User authentication token |
+| Content-Type  | `multipart/form-data` | Yes     | Required for file upload |
+
+---
+
+## 📝 Form-Data Fields
+
+| Field        | Datatype | Required | Description |
+|--------------|----------|----------|-------------|
+| transcribe   | string (`"yes"` or `"no"`) | No | If `"true"`, backend will generate transcription |
+| audio_file   | file     | Yes      | Audio file to upload (`.m4a`, `.mp3`, `.wav`, etc.) |
+| content      | string   | Yes      | Optional extra text content to save with audio |
+
+---
+
+## 📌 Example Form-Data
+
+| Key         | Value                     |
+|-------------|----------------------------|
+| transcribe  | true                       |
+| audio_file  | `<uploaded_audio_file>`    |
+| content     | hello                      |
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/journals/2025-03-11/" \
+  -H "Authorization: Token 6a0110..." \
+  -F "transcribe=true" \
+  -F "audio_file=@/path/to/file.m4a" \
+  -F "content=hello"
+```
+
+---
+
+# 🧩 Response Object Fields
+
+| Field        | Datatype | Required | Description |
+|--------------|----------|----------|-------------|
+| journal_uuid | string   | Yes      | Unique identifier for the journal entry |
+| content      | string   | Yes      | Saved content (text or transcription result) |
+| date         | string   | Yes      | Journal date (YYYY-MM-DD) |
+| attachment   | array    | Yes      | Audio attachment info |
+| created_at   | string   | Yes      | Timestamp of journal creation |
+| updated_at   | string   | Yes      | Timestamp of last update |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "journal_uuid": "fd957c57-2536-4b24-909e-787081dff117",
+    "content": "hello",
+    "date": "2025-03-11",
+    "attachment": [],
+    "created_at": "2025-11-16T13:42:39.655967Z",
+    "updated_at": "2025-11-16T13:42:39.655988Z"
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing audio file or invalid fields |
+| 401 Unauthorized | Missing or invalid token |
+| 415 Unsupported Media Type | Only audio uploads allowed |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- If transcription is enabled, audio will be processed automatically.  
+- Attachments array may include metadata depending on backend implementation.  
+- Supports journaling via voice notes or audio memos.
+

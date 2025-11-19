@@ -1,0 +1,52 @@
+---
+title: "Get Calendar View"
+description: "Retrieve a month-based calendar summary of tasks."
+---
+
+# GET `/tasks/tasks/calendar/`
+
+Fetch a calendar summary for tasks in a specific year and month.  
+Requires `year` and `month` as query parameters.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔎 Query Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|--------|----------|-------------|
+| year | Number | Yes | Year to filter by (e.g., `2024`) |
+| month | Number | Yes | Month number (`1–12`) |
+
+### Example Request
+
+```text
+GET /tasks/tasks/calendar/?year=2024&month=7
+
+```
+---
+## Response Fields
+| Field            | Type  | Description                          |
+|------------------|-------|--------------------------------------|
+| calendar_summary | Array | Calendar summary for the selected month |
+---
+
+## Example Response
+```json
+{
+  "calendar_summary": []
+}
+```
+## Response Fields
+---
+| Field            | Type  | Description                          |
+|------------------|-------|--------------------------------------|
+| calendar_summary | Array | Calendar summary for the selected month |
+---

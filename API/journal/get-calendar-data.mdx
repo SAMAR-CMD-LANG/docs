@@ -1,0 +1,86 @@
+---
+title: "Get Calendar Data"
+description: "Retrieves all dates in a given month and year that contain at least one journal entry."
+---
+
+**GET** `/journals/calendar?year={year}&month={month}`
+
+This endpoint returns a list of dates within a specified **year** and **month** that have at least one journal entry.  
+This is typically used to highlight dates in a calendar UI.
+
+Only authenticated users can access their own calendar journal data.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format    | Required | Description |
+|---------------|-----------------|----------|-------------|
+| Authorization | `Token <token>` | Yes      | User authentication token |
+
+---
+
+## 🔍 Query Parameters
+
+| Parameter | Datatype | Required | Description |
+|-----------|----------|----------|-------------|
+| year      | number   | Yes      | Year to fetch journal activity for (e.g., `2025`) |
+| month     | number   | Yes      | Month to fetch journal activity for (`1–12`) |
+
+---
+
+## 📌 Example Request
+
+```
+GET {{base_url}}journals/calendar?year=2025&month=6
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/journals/calendar?year=2025&month=6" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+# 🧩 Response Body Fields
+
+| Field              | Datatype           | Required | Description |
+|--------------------|--------------------|----------|-------------|
+| dates_with_entries | array of strings   | Yes      | List of dates (`YYYY-MM-DD`) that contain journal entries |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "dates_with_entries": [
+        "2025-06-18"
+    ]
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing or invalid `year` or `month` |
+| 401 Unauthorized | Invalid or missing authentication token |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Response includes **only dates**, not the journal entries themselves.  
+- Useful for marking "active" days in a calendar view.  
+- If no journal entries exist for the month, an empty list is returned.  
+- Both `year` and `month` must be passed as **query parameters**.
+

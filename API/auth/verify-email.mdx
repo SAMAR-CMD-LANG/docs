@@ -1,0 +1,35 @@
+---
+title: "Verify Email"
+description: "Verifies a newly registered user's email using a verification token and returns an access token."
+---
+
+
+
+**POST** `/auth/verify-email`
+
+After registering, the user receives a verification link via email.  
+This link contains a **verification token (`key`)**, which must be sent to this endpoint to activate the account.
+
+Upon successful verification:
+
+- The user’s account becomes **active**
+- The backend issues an **access token**
+- User details are returned for authentication purposes
+
+---
+
+## 📝 Request Body
+
+| Field | Type   | Required | Description                                                                        |
+| ----- | ------ | -------- | ---------------------------------------------------------------------------------- |
+| `key` | string | yes      | The verification token sent to the user's email. Required to activate the account. |
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+  "key": "bla6wfqx4niiqmja1dmhdbwsmwu58ugttlkudvbhnpbsiihdzb5gfsjqtp9rumiw"
+}
+```

@@ -1,0 +1,47 @@
+---
+title: "Delete AI Content"
+description: "Delete AI-generated insight/content from a specific note item."
+---
+
+**DELETE** `/notes/{note_uuid}/items/{item_uuid}/ai/{ai_content_uuid}/`
+
+Deletes a specific AI-generated content block from a note item.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format  | Required | Description |
+|---------------|---------------|----------|-------------|
+| Authorization | Token `<token>` | Yes      | User authentication token |
+
+No request body is required.
+
+---
+
+## 📮 Example Request
+
+```bash
+DELETE {{base_url}}notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/items/6e9c49af-9c09-46a0-a88c-c32084be3925/ai/6798b223-2328-4c36-8282-48bcc554879a/
+```
+
+---
+
+## ✅ Successful Response (200 OK)
+
+```json
+{
+    "message": "AI content 6798b223-2328-4c36-8282-48bcc554879a deleted successfully."
+}
+```
+
+---
+
+## 📦 Response Fields
+
+| Field   | Type   | Description |
+|---------|--------|-------------|
+| message | string | Confirmation of successful deletion |
+
+---
+

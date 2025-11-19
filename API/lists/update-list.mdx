@@ -1,0 +1,55 @@
+---
+title: "Update Task List Name"
+description: "Update the name of an existing user-created task list."
+---
+
+**PATCH** `/tasks/lists/{list_uuid}/`
+
+Updates the name of a specific task list.  
+Only authenticated users can update their own lists.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format       | Required | Description |
+|---------------|--------------------|----------|-------------|
+| Authorization | Token `<token>`      | Yes      | User authentication token |
+| Content-Type  | application/json   | Yes      | JSON request |
+
+---
+
+## 📝 Request Body
+
+| Field | Type   | Required | Description |
+|-------|--------|----------|-------------|
+| name  | string | Yes      | New name for the task list |
+
+---
+
+## 📮 Example Request
+
+```bash
+PATCH {{base_url}}tasks/lists/7a37be9e-80de-4efe-a477-d15bddcca937/
+
+## ✅ Successful Response (200 OK)
+
+```json
+{
+    "uuid": "7a37be9e-80de-4efe-a477-d15bddcca937",
+    "name": "projects 2",
+    "is_global": false,
+    "created_at": "2025-11-18T09:31:33.507365Z",
+    "updated_at": "2025-11-18T09:31:57.245116Z"
+}
+
+
+## 📦 Response Fields (List Object)
+
+| Field       | Type    | Description |
+|-------------|---------|-------------|
+| uuid        | string  | Unique ID of the task list |
+| name        | string  | Updated list name |
+| is_global   | boolean | Indicates if it is a global/system list |
+| created_at  | string  | Timestamp of creation |
+| updated_at  | string  | Timestamp of last update |

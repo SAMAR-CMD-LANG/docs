@@ -1,0 +1,80 @@
+---
+title: "Update Note Content"
+description: "Update only the main content of an existing note using PATCH. Attachments, title, and metadata remain unchanged."
+---
+
+**PATCH** `/notes/{note_uuid}/`
+
+Updates the **content** of an existing note.  
+Only the authenticated user can update their own notes.  
+This endpoint does **not** modify attachments, title, or category.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format           | Required | Description |
+|--------------|-------------------------|----------|-------------|
+| Authorization | `Token <token>`        | Yes      | User authentication token |
+| Content-Type  | `application/json`     | Yes      | Indicates JSON request body |
+
+---
+
+## 📝 Request Body Fields
+
+| Field   | Datatype | Required | Description |
+|---------|----------|----------|-------------|
+| content | string   | Yes      | New note content (text or HTML) |
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X PATCH "https://your-api.com/notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/" \
+  -H "Authorization: Token <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"content": "wazzzzzzzzzzzzzzappppp"}'
+```
+
+---
+
+## ✅ Successful Response (200 OK)
+
+```json
+{
+    "note_uuid": "2fe802b9-0bc9-4f2c-99d4-d4bb9871f844",
+    "title": "movies to download",
+    "category": 2,
+    "labels": [],
+    "is_pinned": false,
+    "is_public": false,
+    "content": "wazzzzzzzzzzzzzzappppp",
+    "attachments": [],
+    "ai_content_items": [],
+    "created_at": "2025-11-17T08:53:02.005109Z",
+    "updated_at": "2025-11-17T09:49:16.001487Z"
+}
+```
+
+---
+
+# 📦 Response Body Fields
+
+| Field            | Datatype | Required | Description |
+|------------------|----------|----------|-------------|
+| note_uuid        | string   | Yes      | Unique identifier of the note |
+| title            | string   | Yes      | Note title |
+| category         | number   | Yes      | Category ID |
+| labels           | array    | Yes      | List of label IDs |
+| is_pinned        | boolean  | Yes      | Whether the note is pinned |
+| is_public        | boolean  | Yes      | Whether the note is publicly visible |
+| content          | string   | Yes      | Updated note content |
+| attachments      | array    | Yes      | Existing attachments (unchanged) |
+| ai_content_items | array    | Yes      | AI-generated content items |
+| created_at       | string   | Yes      | Timestamp when note was created |
+| updated_at       | string   | Yes      | Timestamp of this update |
+
+---
+
+

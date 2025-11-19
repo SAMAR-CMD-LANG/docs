@@ -1,0 +1,114 @@
+---
+title: "Create New Text/HTML Note"
+description: "Creates a new note with text or HTML content, including embedded attachments such as audio or images."
+---
+
+**POST** `/notes/`
+
+This endpoint creates a **new note** using text or HTML-based content.  
+The note may contain embedded **audio or image attachments**, represented as HTML `<div class="attachment-embed">...</div>` blocks.
+
+Only authenticated users can create notes.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format        | Required | Description |
+|---------------|---------------------|----------|-------------|
+| Authorization | `Token <token>`     | Yes      | User authentication token |
+| Content-Type  | `application/json`  | Yes      | JSON request body |
+
+---
+
+## 📝 Request Body Fields
+
+| Field   | Datatype     | Required | Description |
+|---------|--------------|----------|-------------|
+| title   | string       | Yes      | Title of the note |
+| category| number       | Yes      | Category ID of the note |
+| content | string (HTML)| Yes      | Note content, supports HTML + embedded audio/image blocks |
+
+---
+
+## 📌 Example Request
+
+```json
+{
+  "title": "movies to download",
+  "category": 2,
+  "content": "<div class=\"attachment-embed\" data-attachment-id=\"889\" data-attachment-type=\"audio\" data-url=\"https://s3.ap-southeast-1.wasabisys.com/samantha/media/audio/c4f50509-1615-4e20-9f53-5e6484413236.wav\" data-name=\"October 22, 2025 | 11:59:52 AM.wav\" data-size=\"120910\" data-created-on=\"2025-10-22T11:59:56.000\" data-alignment=\"center\">[Attachment: October 22, 2025 | 11:59:52 AM.wav]</div><p>This is a sample audio recording.</p>"
+}
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/notes/" \
+  -H "Authorization: Token 6a0110..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "movies to download",
+    "category": 2,
+    "content": "<div class=\"attachment-embed\" data-attachment-id=\"889\" data-attachment-type=\"audio\" data-url=\"https://s3.ap-southeast-1.wasabisys.com/samantha/media/audio/c4f50509-1615-4e20-9f53-5e6484413236.wav\" data-name=\"October 22, 2025 | 11:59:52 AM.wav\" data-size=\"120910\" data-created-on=\"2025-10-22T11:59:56.000\" data-alignment=\"center\">[Attachment: October 22, 2025 | 11:59:52 AM.wav]</div><p>This is a sample audio recording.</p>"
+}'
+```
+
+---
+
+# 🧩 Response Body Fields
+
+| Field            | Datatype      | Required | Description |
+|------------------|---------------|----------|-------------|
+| note_uuid        | string        | Yes      | Unique identifier of the note |
+| title            | string        | Yes      | Title of the note |
+| category         | number        | Yes      | Category ID |
+| labels           | array         | Yes      | List of label IDs |
+| is_pinned        | boolean       | Yes      | Whether the note is pinned |
+| is_public        | boolean       | Yes      | Whether the note is publicly viewable |
+| content          | string (HTML) | Yes      | Full note content |
+| attachments      | array         | Yes      | Attachments parsed from HTML |
+| ai_content_items | array         | Yes      | AI-generated items (if any) |
+| created_at       | string        | Yes      | Timestamp when the note was created |
+| updated_at       | string        | Yes      | Timestamp when last updated |
+
+---
+
+# ✅ Successful Response (201 Created)
+
+```json
+{
+    "note_uuid": "2fe802b9-0bc9-4f2c-99d4-d4bb9871f844",
+    "title": "movies to download",
+    "category": 2,
+    "labels": [],
+    "is_pinned": false,
+    "is_public": false,
+    "content": "<div class=\"attachment-embed\" data-attachment-id=\"889\" data-attachment-type=\"audio\" data-url=\"https://s3.ap-southeast-1.wasabisys.com/samantha/media/audio/c4f50509-1615-4e20-9f53-5e6484413236.wav\" data-name=\"October 22, 2025 | 11:59:52 AM.wav\" data-size=\"120910\" data-created-on=\"2025-10-22T11:59:56.000\" data-alignment=\"center\">[Attachment: October 22, 2025 | 11:59:52 AM.wav]</div><p>This is a sample audio recording.</p>",
+    "attachments": [],
+    "ai_content_items": [],
+    "created_at": "2025-11-17T08:53:02.005109Z",
+    "updated_at": "2025-11-17T08:53:02.042331Z"
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing required fields (`title`, `category`, or `content`) |
+| 401 Unauthorized | Invalid or missing token |
+| 500 Internal Server Error | Unexpected backend error |
+
+---
+
+# 📘 Notes
+
+- Content accepts **HTML**, enabling embeds like audio/image attachments.  
+- `attachments` array may remain empty if parsing backend doesn't extract attachments from HTML.  
+- To add separate attachments, use **Create Note with Image/Doc** or **Create Note Audio** endpoints.
+

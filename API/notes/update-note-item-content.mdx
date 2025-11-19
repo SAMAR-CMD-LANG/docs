@@ -1,0 +1,71 @@
+---
+title: "Update Note Item Content"
+description: "Patch an existing note item to update its text content."
+---
+
+**PATCH** `/notes/{note_uuid}/items/{item_uuid}/`
+
+Updates the **content** of an existing note item.  
+Only the owner of the note can modify its items.  
+Attachments and metadata remain unchanged.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format        | Required | Description |
+|--------------|----------------------|----------|-------------|
+| Authorization | Token `<token>`       | Yes      | User authentication token |
+| Content-Type  | application/json     | Yes      | JSON request body |
+
+---
+
+## 📝 Request Body Fields
+
+| Field   | Datatype | Required | Description |
+|---------|----------|----------|-------------|
+| content | string   | Yes      | Updated text content for the note item |
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X PATCH "https://your-api.com/notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/items/6e9c49af-9c09-46a0-a88c-c32084be3925/" \
+  -H "Authorization: Token <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"content": "This is the updated text for the item."}'
+```
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "item_uuid": "6e9c49af-9c09-46a0-a88c-c32084be3925",
+    "content": "This is the updated text for the item.",
+    "order": 0,
+    "attachment": [],
+    "ai_content_items": [],
+    "created_at": "2025-11-17T09:18:32.360853Z",
+    "updated_at": "2025-11-18T04:49:57.478682Z"
+}
+```
+
+---
+
+# 📦 Response Body Fields
+
+| Field            | Type    | Description |
+|------------------|---------|-------------|
+| item_uuid        | string  | Unique identifier of the note item |
+| content          | string  | Updated text content |
+| order            | number  | Position in the note |
+| attachment       | array   | Attachments (unchanged) |
+| ai_content_items | array   | AI-generated data (if any) |
+| created_at       | string  | Item creation timestamp |
+| updated_at       | string  | Last updated timestamp |
+
+---
+

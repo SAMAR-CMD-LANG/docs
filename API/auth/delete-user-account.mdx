@@ -1,0 +1,106 @@
+---
+title: "Delete User Account"
+description: "Permanently deletes the authenticated user’s account after verifying the confirmation phrase."
+---
+
+**POST** `/auth/delete-account`
+
+This endpoint permanently deletes the **currently authenticated user’s account**.  
+Deletion is **irreversible**, and the user must explicitly confirm the action by typing:
+
+```
+delete my account
+```
+
+A valid authentication token is required.
+
+---
+
+## ⚠️ Important Notes
+
+- This action **cannot be undone**.  
+- The user must send the **exact confirmation phrase**: `"delete my account"`.  
+- The request **must** include the `Authorization` header with the user’s token.  
+- Once deleted, the user’s data is permanently removed from the system.  
+
+---
+
+## 🔐 Required Headers
+
+| Header        | Datatype | Required | Description |
+|---------------|----------|----------|-------------|
+| Authorization | string   | Yes      | Should be: `Token <your_token>` |
+
+---
+
+## 📝 Request Body Parameters
+
+| Field                | Datatype | Required | Description |
+|----------------------|----------|----------|-------------|
+| confirmation_phrase  | string   | Yes      | Must be exactly `"delete my account"` to proceed. |
+
+---
+
+## 📌 Example Headers
+
+```bash
+Authorization: Token 66b97f2a4b9c76a00f3edc69ba1592f44e38f7b6
+Content-Type: application/json
+```
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+  "confirmation_phrase": "delete my account"
+}
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/auth/delete-account" \
+  -H "Authorization: Token 66b97f2a4b9c76a00f3edc69ba1592f44e38f7b6" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "confirmation_phrase": "delete my account"
+  }'
+```
+
+---
+
+
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+  "message": "Your account has been permanently deleted."
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing or incorrect confirmation phrase. |
+| 401 Unauthorized | Invalid or missing authentication token. |
+| 403 Forbidden | Token is valid but user is not allowed to delete this account. |
+| 500 Internal Server Error | Unexpected backend issue. |
+
+---
+
+# 📘 Notes
+
+- The backend will not delete the account unless the confirmation phrase **matches exactly**.  
+- The frontend should log the user out immediately after a successful deletion.  
+- Any tokens associated with the deleted user become invalid instantly.  
+

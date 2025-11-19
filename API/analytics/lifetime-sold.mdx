@@ -1,0 +1,33 @@
+---
+title: "Get Lifetime Sold Count"
+description: "Retrieve the total number of lifetime sold units."
+---
+
+# GET `/lifetime-sold/`
+
+Returns the lifetime total of all units sold for the authenticated user.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| lifetime_sold | Number | Total units sold over the lifetime |
+
+### Example Response
+
+```json
+{
+  "lifetime_sold": 23
+}

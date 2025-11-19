@@ -1,0 +1,124 @@
+---
+title: "Get User Analytics"
+description: "Retrieve analytics across journals, notes, and tasks for the authenticated user."
+---
+
+# GET `/analytics`
+
+Fetches analytics for the authenticated user, including journals, notes, and tasks.  
+Token authentication required.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 📥 Response — 200 OK
+
+### Top-Level Fields
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| activities | Object | Contains all analytics sections |
+
+---
+
+## 📊 Journal Analytics
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| total_entries | Number | Total journal entries |
+| time_breakdown | Object | Count of entries per time period |
+
+### time_breakdown Fields
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| last_month | Number | Entries created last month |
+| last_week | Number | Entries created last week |
+| this_week | Number | Entries created this week |
+
+---
+
+## 📝 Notes Analytics
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| total_pages | Number | Total number of note pages |
+| category_breakdown | Object | Entries per category |
+
+### category_breakdown Example
+
+> Values vary per user
+
+- Work  
+- Personal  
+- Academics  
+- Health & Fitness  
+- Finance  
+- Social & Events  
+- Ideas & Creativity  
+- Home & Lifestyle  
+- Others  
+
+---
+
+## ✅ Tasks Analytics
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| total_tasks | Number | Total number of tasks |
+| status_breakdown | Object | Count per task status |
+| priority_breakdown | Object | Count per priority level |
+
+---
+
+## 📘 Example Response
+
+```json
+{
+  "activities": {
+    "journal": {
+      "total_entries": 3,
+      "time_breakdown": {
+        "last_month": 0,
+        "last_week": 0,
+        "this_week": 0
+      }
+    },
+    "notes": {
+      "total_pages": 6,
+      "category_breakdown": {
+        "Work": 0,
+        "Personal": 1,
+        "Academics": 3,
+        "Health & Fitness": 0,
+        "Finance": 0,
+        "Social & Events": 0,
+        "Ideas & Creativity": 0,
+        "Home & Lifestyle": 0,
+        "Others": 2
+      }
+    },
+    "tasks": {
+      "total_tasks": 4,
+      "status_breakdown": {
+        "pending": 4,
+        "completed": 0,
+        "cancelled": 0
+      },
+      "priority_breakdown": {
+        "urgent": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "none": 4
+      }
+    }
+  }
+}

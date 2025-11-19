@@ -1,0 +1,61 @@
+---
+title: "Create New Task List"
+description: "Create a personalized task list for organizing tasks."
+---
+
+**POST** `/tasks/lists/`
+
+Creates a new task list under the authenticated user’s account.
+
+
+## 🔐 Required Headers
+
+| Key           | Value Format       | Required | Description |
+|---------------|--------------------|----------|-------------|
+| Authorization | Token `<token>`      | Yes      | User authentication token |
+| Content-Type  | application/json   | Yes      | Required for JSON body |
+
+
+
+## 📝 Request Body
+
+| Field | Type   | Required | Description |
+|-------|--------|----------|-------------|
+| name  | string | Yes      | Name of the new list |
+
+
+
+## 📮 Example Request
+
+```json
+{
+    "name": "project 3"
+}
+```
+
+
+## ✅ Example Response (201 Created)
+
+```json
+{
+    "uuid": "b001c3af-b6eb-498d-a2f6-8f4d2cc9dc39",
+    "name": "project 3",
+    "is_global": false,
+    "created_at": "2025-11-18T09:04:37.273604Z",
+    "updated_at": "2025-11-18T09:04:37.273629Z"
+}
+```
+
+
+
+## 📦 Response Fields
+
+| Field       | Type    | Description |
+|-------------|---------|-------------|
+| uuid        | string  | Unique identifier for the created list |
+| name        | string  | Name of the task list |
+| is_global   | boolean | Indicates if the list is globally available |
+| created_at  | string  | Timestamp of creation |
+| updated_at  | string  | Timestamp of last update |
+
+

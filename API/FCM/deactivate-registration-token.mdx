@@ -1,0 +1,78 @@
+---
+title: "Deactivate FCM Registration Token"
+description: "Removes the user's registered FCM device token, disabling push notifications for that device."
+---
+
+**DELETE** `/fcm/register/`
+
+This endpoint **deactivates** the user's currently registered **Firebase Cloud Messaging (FCM)** token.  
+Once removed, the device will **no longer receive push notifications** until a new token is registered.
+
+A valid authentication token is required.
+
+This endpoint does **not** take a request body.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format    | Required | Description |
+|---------------|-----------------|----------|-------------|
+| Authorization | `Token <token>` | Yes      | User authentication token |
+
+---
+
+## 📝 Request Body
+
+No request body is required.
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| (none) | —        | —        | The endpoint does not accept a request body |
+
+---
+
+## 📌 Example Request
+
+```
+DELETE {{base_url}}/fcm/register/
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X DELETE "https://your-api.com/fcm/register/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+# 🧩 Successful Response (200 OK)
+
+```json
+{
+    "message": "FCM registration token removed successfully."
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 401 Unauthorized | Missing or invalid authentication token |
+| 404 Not Found | No active FCM registration token found |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- Use this endpoint when a user logs out or disables notifications.  
+- After deactivation, no push notifications will be delivered to this device.  
+- User must call **POST /fcm/register** again to re-enable notifications.
+

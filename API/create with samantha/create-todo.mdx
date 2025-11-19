@@ -1,0 +1,34 @@
+---
+title: "Create Task with Sam"
+description: "Create tasks using natural language interpreted by Sam."
+---
+
+# POST `/tasks/create-with-sam/`
+
+Create one or more tasks based on natural language instructions.  
+The system will interpret your text and automatically create the appropriate task(s).
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|--------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 📤 Request Body
+
+| Field | Type | Required | Description |
+|--------|--------|----------|-------------|
+| text | String | Yes | The natural language instruction for creating tasks |
+
+### Example Request Body
+
+```json
+{
+  "text": "Add me a todo to pick up my niece at 9pm friday"
+}
+```
+---

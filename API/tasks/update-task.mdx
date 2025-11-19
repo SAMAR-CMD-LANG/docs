@@ -1,0 +1,92 @@
+---
+title: Update Task
+---
+
+### **PATCH /tasks/tasks/{task_uuid}**
+
+Updates an existing task.  
+This example shows moving a task to another section using `target_section_uuid`.
+
+***
+
+## **Headers**
+
+| Key           | Value            | Required | Description               |
+| ------------- | ---------------- | -------- | ------------------------- |
+| Authorization | Token `<token>`    | Yes      | User authentication token |
+| Content-Type  | application/json | Yes      | JSON request body         |
+
+***
+
+## **Request Body**
+
+```json
+{
+  "target_section_uuid": "558ba33a-6f6e-4120-bb75-119fc61013b7"
+}
+```
+
+***
+
+## **Example Response**
+
+```json
+{
+  "uuid": "69d8773c-6708-4d80-bcff-ad14c890919f",
+  "title": "work",
+  "description": "",
+  "list_uuid": "b001c3af-b6eb-498d-a2f6-8f4d2cc9dc39",
+  "section_uuid": "558ba33a-6f6e-4120-bb75-119fc61013b7",
+  "status": "PENDING",
+  "start_date": "2025-08-25",
+  "start_time": "07:00:00",
+  "due_date": "2025-08-25",
+  "due_time": "12:30:00",
+  "order": 0,
+  "priority": null,
+  "is_archived": false,
+  "reminders": [
+    {
+      "uuid": "623ebe78-ec4d-40b7-b3cf-df918b65d699",
+      "offset_preset": null,
+      "actual_trigger_time": "2024-12-05T13:30:00Z",
+      "is_active": true
+    },
+    {
+      "uuid": "a13addc9-f78b-452d-9235-baf5bd6590fc",
+      "offset_preset": "at_due_time",
+      "actual_trigger_time": "2025-08-25T12:30:00Z",
+      "is_active": true
+    }
+  ],
+  "created_at": "2025-11-18T12:50:10.284661Z",
+  "updated_at": "2025-11-18T12:52:15.584560Z"
+}
+```
+
+***
+
+***
+
+## **Response Fields**
+
+| Field        | Type        | Description                    |
+| ------------ | ----------- | ------------------------------ |
+| uuid         | string      | Unique identifier for the task |
+| title        | string      | Title of the task              |
+| description  | string      | Description text               |
+| list_uuid    | string      | Parent list UUID               |
+| section_uuid | string/null | Section UUID if assigned       |
+| status       | string      | Task status                    |
+| start_date   | string      | Task start date                |
+| start_time   | string      | Task start time                |
+| due_date     | string      | Due date                       |
+| due_time     | string      | Due time                       |
+| order        | number      | Ordering index                 |
+| priority     | string/null | Priority level                 |
+| is_archived  | boolean     | Whether archived               |
+| reminders    | array       | List of attached reminders     |
+| created_at   | string      | Creation timestamp             |
+| updated_at   | string      | Update timestamp               |
+
+***

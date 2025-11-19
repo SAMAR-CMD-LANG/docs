@@ -1,0 +1,141 @@
+---
+title: "Verify Magic Login Link"
+description: "Verifies the magic link token sent to the user’s email and logs them in by returning an access token and full user profile."
+---
+
+**GET** `/auth/magic-link/verify`
+
+This endpoint verifies the **magic link token** sent to the user's email.  
+When the user clicks the magic link, the token attached to the URL is used to:
+
+- Validate the user  
+- Log them into the application  
+- Return a fresh authentication token  
+- Return the complete user object  
+
+This is the final step of magic link login.
+
+---
+
+## 🧩 Magic Link Format
+
+The token is passed **as a query parameter** in the URL:
+
+```
+{{base_url}}/magic-link/verify?token=16894:1vJrC5:rtbfizT2BBe6VsRm_4R1z0dLpdIWJ341z0njcJPhI0I
+```
+
+---
+
+## 📝 Query Parameters
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| token  | string   | Yes      | The magic link verification token received via email. |
+
+---
+
+## 📝 Request Body
+
+No request body is required since the token is included in the URL.
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| (none) | —        | —        | No body needed. |
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/auth/magic-link/verify?token=16894:1vJrC5:rtbfizT2BBe6VsRm_4R1z0dLpdIWJ341z0njcJPhI0I"
+```
+
+---
+
+
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "token": "ba37b2be6f54d32017f4b17db5f78411c77a8ea8",
+    "user": {
+        "uuid": "a32dd6a8-24ec-4c27-b8a7-9cbcb4ad1340",
+        "email": "samarjith.r@senatio.com",
+        "first_name": "samarjeeth",
+        "last_name": "RS",
+        "profilepic": null,
+        "usage": {
+            "credit_balance": 25,
+            "earned_credits": 0,
+            "remaining_tool_calls": 0,
+            "is_free_user": true
+        },
+        "plan_info": {
+            "active_plans": [],
+            "upcoming_plans": [],
+            "currency": null
+        },
+        "timezone": null
+    }
+}
+```
+
+---
+
+# 🧩 User Object Documentation
+
+### Top-Level User Fields
+
+| Field       | Datatype    | Nullable | Description |
+|-------------|-------------|----------|-------------|
+| uuid        | string      | No       | Unique identifier of the user. |
+| email       | string      | No       | User’s email address. |
+| first_name  | string      | No       | User’s first name. |
+| last_name   | string      | No       | User’s last name. |
+| profilepic  | string/null | Yes      | URL of the profile picture. |
+| timezone    | string/null | Yes      | User timezone. |
+
+---
+
+### Usage Object (`usage`)
+
+| Field                   | Datatype | Nullable | Description |
+|-------------------------|----------|----------|-------------|
+| credit_balance          | number   | No       | Remaining credits. |
+| earned_credits          | number   | No       | Total earned credits. |
+| remaining_tool_calls    | number   | No       | Remaining tool/API calls. |
+| is_free_user            | boolean  | No       | Indicates free-tier user. |
+
+---
+
+### Plan Info Object (`plan_info`)
+
+| Field           | Datatype | Nullable | Description |
+|------------------|----------|----------|-------------|
+| active_plans     | array    | Yes      | Currently active subscription plans. |
+| upcoming_plans   | array    | Yes      | Scheduled future plans. |
+| currency         | string   | Yes      | Billing currency. |
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Missing or invalid token parameter. |
+| 401 Unauthorized | Expired or invalid magic link token. |
+| 404 Not Found | Token does not correspond to any user. |
+| 500 Internal Server Error | Unexpected backend issue. |
+
+---
+
+# 📘 Notes
+
+- Tokens in magic links are **single-use** and may expire.  
+- On successful verification, the returned `"token"` should be stored for authenticated requests.  
+- Magic link login eliminates the need for passwords.  
+

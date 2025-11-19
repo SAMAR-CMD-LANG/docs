@@ -1,0 +1,69 @@
+---
+title: "Create New Label"
+description: "Create a new note label with a name and color."
+---
+
+**POST** `/notes/labels/`
+
+Creates a new label that can be assigned to notes.  
+A label includes a UUID, a name, and a color.  
+Only authenticated users can create labels.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format     | Required | Description |
+|--------------|-------------------|----------|-------------|
+| Authorization | Token `<token>`    | Yes      | User authentication token |
+| Content-Type  | application/json | Yes      | JSON request body |
+
+---
+
+## 📝 Request Body Fields
+
+| Field      | Type   | Required | Description |
+|------------|--------|----------|-------------|
+| label_uuid | string | Yes      | Unique identifier for the new label |
+| name       | string | Yes      | Display name of the label |
+| color      | string | Yes      | Color identifier (e.g., combo-box-red) |
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X POST "https://your-api.com/notes/labels/" \
+  -H "Authorization: Token <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "label_uuid": "24a7aedc-975d-4f6d-8147-1cc46c6fcc93",
+        "name": "label name",
+        "color": "combo-box-red"
+      }'
+```
+
+---
+
+# ✅ Successful Response (201 Created)
+
+```json
+{
+    "label_uuid": "24a7aedc-975d-4f6d-8147-1cc46c6fcc93",
+    "name": "label name",
+    "color": "combo-box-red"
+}
+```
+
+---
+
+# 📦 Response Body Fields
+
+| Field      | Type   | Description |
+|------------|--------|-------------|
+| label_uuid | string | Unique ID of the created label |
+| name       | string | Label name |
+| color      | string | Associated label color |
+
+---
+

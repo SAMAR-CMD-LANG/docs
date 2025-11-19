@@ -1,0 +1,154 @@
+---
+title: "Get Authenticated User Details"
+description: "Returns the authenticated user's complete profile information using the access token."
+---
+
+
+
+**GET** `/auth/user`
+
+This endpoint returns the currently authenticated user’s complete profile information using the token provided in the Authorization header.
+
+---
+
+## 🔐 Required Headers
+
+| Header          | Required | Description |
+|-----------------|----------|-------------|
+| Authorization   | yes      | Format: `Token <user_token>` |
+
+---
+
+## 📝 Request Parameters
+
+This endpoint does not require request parameters.
+
+| Field | Datatype | Required | Description |
+|-------|----------|----------|-------------|
+| (none) | —       | —        | No request parameters required |
+
+---
+
+## 📝 Request Body
+
+This endpoint does not require a request body.
+
+| Field | Datatype | Required | Description |
+|-------|----------|----------|-------------|
+| (none) | —       | —        | No body fields required |
+
+---
+
+## 📌 Example Authorization Header
+
+```bash
+Authorization: Token 6a0110b06109fbf2e3a7046e4ace26a7c7ed3cda
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/auth/user" \
+  -H "Authorization: Token 6a0110b06109fbf2e3a7046e4ace26a7c7ed3cda"
+```
+
+---
+
+
+
+---
+
+
+
+---
+
+## ✅ Successful Response (200 OK)
+
+```json
+{
+    "uuid": "a32dd6a8-24ec-4c27-b8a7-9cbcb4ad1340",
+    "email": "samarjith.r@senatio.com",
+    "first_name": "samarjith",
+    "last_name": "R",
+    "profilepic": null,
+    "usage": {
+        "credit_balance": 25,
+        "earned_credits": 0,
+        "remaining_tool_calls": 0,
+        "is_free_user": true
+    },
+    "plan_info": {
+        "active_plans": [],
+        "upcoming_plans": [],
+        "currency": null
+    },
+    "timezone": null
+}
+```
+
+---
+
+# ❌ Error Response — 401 Unauthorized
+
+```json
+{
+    "detail": "Invalid token."
+}
+```
+
+---
+
+# 📘 Full User Object Documentation  
+(Every field included exactly as provided)
+
+## 🧩 User Object — Top Level Fields
+
+| Field        | Datatype    | Nullable | Description |
+|--------------|-------------|----------|-------------|
+| uuid         | string      | No       | Unique identifier of the user. |
+| email        | string      | No       | Registered email address of the user. |
+| first_name   | string      | No       | User’s first name. |
+| last_name    | string      | No       | User’s last name. |
+| profilepic   | string/null | Yes      | URL of the user's profile picture if uploaded. |
+| timezone     | null        | Yes      | User’s selected timezone (if set). |
+
+---
+
+## 🧩 User Object — Usage Fields (`usage`)
+
+| Field                   | Datatype | Nullable | Description |
+|-------------------------|----------|----------|-------------|
+| credit_balance          | number   | No       | Total remaining credits available to the user. |
+| earned_credits          | number   | No       | Credits earned through actions or rewards. |
+| remaining_tool_calls    | number   | No       | Remaining API/tool calls allowed. |
+| is_free_user            | boolean  | No       | Indicates if the user is on a free plan. |
+
+---
+
+## 🧩 User Object — Plan Info Fields (`plan_info`)
+
+| Field           | Datatype | Nullable | Description |
+|------------------|----------|----------|-------------|
+| active_plans     | array    | Yes      | List of currently active subscription plans. |
+| upcoming_plans   | array    | Yes      | List of subscription plans scheduled for future activation. |
+| currency         | string   | Yes      | Currency used for plan billing. |
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 401 Unauthorized | Token missing, invalid, or expired. |
+| 500 Internal Server Error | Unexpected backend issue. |
+
+---
+
+# 📘 Notes
+
+- A valid token must be included in the header.  
+- Often used to restore authenticated sessions on page reload.  
+- If `"detail": "Invalid token."` is returned, the frontend should clear the token and redirect to login.
+

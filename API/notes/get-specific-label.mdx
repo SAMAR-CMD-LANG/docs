@@ -1,0 +1,50 @@
+---
+title: "Get Specific Label"
+description: "Retrieve details of a single label by its UUID."
+---
+
+**GET** `/notes/labels/{label_uuid}/`
+
+Retrieves the full details of a specific label owned by the authenticated user.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format  | Required | Description |
+|--------------|----------------|----------|-------------|
+| Authorization | Token `<token>` | Yes      | User authentication token |
+
+---
+
+## 📮 Example Request
+
+```bash
+GET {{base_url}}notes/labels/24a7aedc-975d-4f6d-8147-1cc46c6fcc93/
+Authorization: Token <token>
+```
+
+---
+
+## ✅ Successful Response (200 OK)
+
+```json
+{
+    "label_uuid": "24a7aedc-975d-4f6d-8147-1cc46c6fcc93",
+    "name": "Very Important",
+    "color": "combo-box-green"
+}
+```
+
+---
+
+## 📦 Response Fields
+
+| Field      | Type   | Description |
+|------------|--------|-------------|
+| label_uuid | string | Unique identifier for the label |
+| name       | string | Label name |
+| color      | string | Label color identifier |
+
+---
+

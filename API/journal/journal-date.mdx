@@ -1,0 +1,146 @@
+---
+title: "Get Journals by Date"
+description: "Retrieves all journal entries for a specific date, including navigation to previous and next dates."
+---
+
+**GET** `/journals/{date}/`
+
+This endpoint retrieves **all journal entries** created for a specific date.  
+It also provides **navigation metadata**, enabling the client to easily move to the previous or next dates with existing journals.
+
+Only authenticated users can retrieve their own journal entries.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format    | Required | Description |
+|---------------|-----------------|----------|-------------|
+| Authorization | `Token <token>` | Yes      | User authentication token |
+
+---
+
+## 📝 Request Body
+
+This endpoint does **not** take a request body.
+
+| Field | Datatype | Required | Description |
+|--------|----------|----------|-------------|
+| (none) | —        | —        | Not required |
+
+---
+
+## 📌 Example Request
+
+```
+GET {{base_url}}journals/2025-06-02/
+Authorization: Token <token>
+```
+
+---
+
+## 📮 Example cURL
+
+```bash
+curl -X GET "https://your-api.com/journals/2025-06-02/" \
+  -H "Authorization: Token 6a0110..."
+```
+
+---
+
+# 🧩 Response Structure
+
+The response contains two top-level objects:
+
+| Field       | Datatype | Required | Description |
+|-------------|----------|----------|-------------|
+| entries     | array    | Yes      | Array of journal entries for the specified date |
+| navigation  | object   | Yes      | Links to previous and next available journal dates |
+
+---
+
+# 🧩 Entries[] Object Fields
+
+| Field        | Datatype | Required | Description |
+|--------------|----------|----------|-------------|
+| journal_uuid | string   | Yes      | Unique identifier of the journal entry |
+| content      | string   | Yes      | Journal content (text or transcription) |
+| date         | string   | Yes      | Entry date (YYYY-MM-DD) |
+| attachment   | array    | Yes      | Image/audio file metadata (may be empty) |
+| created_at   | string   | Yes      | Timestamp of creation |
+| updated_at   | string   | Yes      | Timestamp of last update |
+
+---
+
+# 🧩 Attachment[] Object Fields
+
+| Field      | Datatype | Required | Description |
+|------------|----------|----------|-------------|
+| id         | number   | Yes      | Attachment ID |
+| url        | string   | Yes      | Public URL of the uploaded image/audio |
+| type       | string   | Yes      | Attachment type (`image`, `audio`, etc.) |
+| size       | number   | Yes      | File size in bytes |
+| name       | string   | Yes      | Original filename |
+| created_at | string   | Yes      | Timestamp of upload |
+
+---
+
+# 🧩 Navigation Object Fields
+
+| Field         | Datatype     | Required | Description |
+|---------------|--------------|----------|-------------|
+| previous_date | string/null  | Yes      | Previous available journal date |
+| next_date     | string/null  | Yes      | Next available journal date |
+
+---
+
+# ✅ Successful Response (200 OK)
+
+```json
+{
+    "entries": [
+        {
+            "journal_uuid": "11e88ab8-df0b-42d9-bd83-9102935f70c2",
+            "content": "this is some content",
+            "date": "2025-06-02",
+            "attachment": [
+                {
+                    "id": 1455,
+                    "url": "https://s3.ap-southeast-1.wasabisys.com/samantha/media/image/5d5aa992-f25b-4bcb-8e9a-c3bf6f6e9251.png",
+                    "type": "image",
+                    "size": 2295,
+                    "name": "Screenshot 2025-11-13 120341.png",
+                    "created_at": "2025-11-17T06:43:22.073742Z"
+                }
+            ],
+            "created_at": "2025-11-17T06:43:22.080786Z",
+            "updated_at": "2025-11-17T06:43:22.080814Z"
+        }
+    ],
+    "navigation": {
+        "previous_date": "2025-03-11",
+        "next_date": "2025-06-18"
+    }
+}
+```
+
+---
+
+# ⚠️ Possible Errors
+
+| Status | Description |
+|--------|-------------|
+| 400 Bad Request | Invalid date format |
+| 401 Unauthorized | Missing or invalid token |
+| 404 Not Found | No journals found for this date |
+| 500 Internal Server Error | Unexpected backend issue |
+
+---
+
+# 📘 Notes
+
+- A date can contain **multiple journal entries**.  
+- Navigation helps build a calendar-like browsing experience.  
+- Attachments include metadata for each file.  
+- Text, images, and audio entries may appear together depending on what the user created.
+

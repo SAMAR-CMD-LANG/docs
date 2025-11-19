@@ -1,0 +1,56 @@
+---
+title: "Get All Reminders for a Task"
+description: "Fetch all reminders associated with a specific task."
+---
+
+# GET `/tasks/tasks/{task_uuid}/reminders/`
+
+Retrieve all reminders linked to a specific task.  
+Only authenticated users can access their own reminders.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|-----|--------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔗 Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| task_uuid | UUID | Yes | ID of the task whose reminders are being fetched |
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field | Type | Description |
+|--------|--------|-------------|
+| uuid | UUID | Unique identifier of the reminder |
+| offset_preset | String/null | Reminder preset (e.g., `"at_due_time"`) or null |
+| actual_trigger_time | ISO datetime | Exact trigger time of the reminder |
+| is_active | Boolean | Whether the reminder is active |
+
+### Example Response
+
+```json
+[
+  {
+    "uuid": "5cf95d3c-e2db-4de7-b285-ffa1e0ccb986",
+    "offset_preset": null,
+    "actual_trigger_time": "2024-12-05T13:30:00Z",
+    "is_active": true
+  },
+  {
+    "uuid": "80de6227-0f53-42c0-980a-cba45aa41a95",
+    "offset_preset": "at_due_time",
+    "actual_trigger_time": "2025-08-25T12:30:00Z",
+    "is_active": true
+  }
+]

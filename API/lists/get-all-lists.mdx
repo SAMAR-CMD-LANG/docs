@@ -1,0 +1,63 @@
+---
+title: "Get All Task Lists"
+description: "Retrieve all task lists, including global and user-created lists."
+---
+
+**GET** `/tasks/lists/`
+
+Retrieves all task lists available to the authenticated user — including both global system lists and user-created lists.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format       | Required | Description |
+|---------------|--------------------|----------|-------------|
+| Authorization | Token `<token>`      | Yes      | User authentication token |
+
+---
+
+## 📮 Example Request
+
+```
+GET {{base_url}}tasks/lists/
+Authorization: Token <token>
+```
+
+---
+
+## ✅ Example Response (200 OK)
+
+```json
+[
+    {
+        "uuid": "a1b307c2-b851-490d-b942-353267cf78a3",
+        "name": "Global List",
+        "is_global": true,
+        "created_at": "2025-11-14T05:38:18.198520Z",
+        "updated_at": "2025-11-14T05:38:18.198529Z"
+    },
+    {
+        "uuid": "b001c3af-b6eb-498d-a2f6-8f4d2cc9dc39",
+        "name": "project 3",
+        "is_global": false,
+        "created_at": "2025-11-18T09:04:37.273604Z",
+        "updated_at": "2025-11-18T09:04:37.273629Z"
+    }
+]
+```
+
+---
+
+## 📦 List Object Fields
+
+| Field       | Type    | Description |
+|-------------|---------|-------------|
+| uuid        | string  | Unique ID for the task list |
+| name        | string  | Name of the list |
+| is_global   | boolean | Indicates if the list is a system/global list |
+| created_at  | string  | ISO timestamp of creation |
+| updated_at  | string  | ISO timestamp of last update |
+
+---
+

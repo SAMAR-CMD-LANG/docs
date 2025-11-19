@@ -1,0 +1,22 @@
+## DELETE /notes/{note_uuid}/items/{item_uuid}/
+
+### Action
+Deletes a specific note item inside a note.  
+Only authenticated users can delete note items.
+
+---
+
+### Header Format
+
+| Key | Value | Required | Description |
+|-----|--------|----------|-------------|
+| Authorization | Token `<token>` | Yes | User authentication token |
+
+_No request body._
+
+---
+
+### Example Request
+```http
+DELETE {{base_url}}notes/2fe802b9-0bc9-4f2c-99d4-d4bb9871f844/items/589c21db-3041-4b39-94c8-42cdb05c597b/
+Authorization: Token <token>

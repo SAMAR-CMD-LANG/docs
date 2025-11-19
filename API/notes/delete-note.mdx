@@ -1,0 +1,39 @@
+---
+title: "Delete Note"
+description: "Delete an existing note permanently using its UUID."
+---
+
+**DELETE** `/notes/{note_uuid}/`
+
+Deletes an existing note by its **unique identifier**.  
+Only authenticated users can delete their own notes.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format      | Required | Description |
+|---------------|-------------------|----------|-------------|
+| Authorization | `Token <token>`   | Yes      | User authentication token |
+
+---
+
+## 📤 Request Body
+
+_No request body required._
+
+---
+
+## ✅ Successful Response (204 No Content)
+
+The note was deleted successfully.
+
+_No response body._
+
+---
+
+## 📮 Example Request
+
+```bash
+curl -X DELETE "https://your-api.com/notes/2e240d5e-d69a-47d6-92e5-3c3916d93a42/" \
+  -H "Authorization: Token <token>"

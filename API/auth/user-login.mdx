@@ -1,0 +1,33 @@
+---
+title: "User Login"
+description: "Authenticate a user using email and password. Returns an access token and full user details."
+---
+
+
+
+**POST** `/auth/login/`
+
+This endpoint authenticates a registered user using their email and password.  
+Upon successful login, it returns:
+
+- An **access token** for authenticated requests  
+- Complete **user profile**, including usage limits, plan information, and preferences  
+
+---
+
+## 📝 Request Body
+
+| Field     | Type   | Required | Description |
+|-----------|--------|----------|-------------|
+| `email`   | string | yes | Registered email address of the user. |
+| `password` | string | yes | The user's account password. |
+
+---
+
+## 📌 Example Request Body
+
+```json
+{
+  "email": "samarjith.r@senatio.com",
+  "password": "samarjith123"
+}

@@ -1,0 +1,217 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Mint Starter Kit",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "API Documentation",
+        "groups": [
+          {
+            "group": "analytics",
+            "pages": [
+              "api/analytics/user-analytics",
+              "api/analytics/traits",
+              "api/analytics/lifetime-sold"
+            ]
+          },
+          {
+            "group": "Authentication",
+            "pages": [
+              "api/auth/register-new-user",
+              "api/auth/user-login",
+              "api/auth/password-reset",
+              "api/auth/password-reset-confirm",
+              "api/auth/logout-user",
+              "api/auth/get-user-details",
+              "api/auth/google-oauth-login",
+              "api/auth/verify-email",
+              "api/auth/resend-verification-email",
+              "api/auth/apple-login",
+              "api/auth/delete-user-account",
+              "api/auth/update-user-details",
+              "api/auth/send-magic-link",
+              "api/auth/verify-magic-link"
+            ]
+          },
+          {
+            "group": "Chats",
+            "pages": [
+              "api/chats/all-chat-sessions",
+              "api/chats/create-new-session",
+              "api/chats/get-specific-chat-session",
+              "api/chats/update-chat-title",
+              "api/chats/delete-chat",
+              "api/chats/create-chat-query",
+              "api/chats/get-bookmarks",
+              "api/chats/create-bookmark",
+              "api/chats/delete-bookmark"
+            ]
+          },
+          {
+            "group": "Core Endpoints",
+            "pages": [
+              "api/core/user-preferences",
+              "api/core/universal-transcribe-endpoint",
+              "api/core/user-streak",
+              "api/core/api-byok"
+            ]
+          },
+          {
+            "group": "FCM",
+            "pages": [
+              "api/fcm/add-registration-token",
+              "api/fcm/deactivate-registration-token"
+            ]
+          },
+          {
+            "group": "Journals",
+            "pages": [
+              "api/journal/new-journal-text",
+              "api/journal/new-journal-image",
+              "api/journal/new-journal-audio",
+              "api/journal/new-journal-img-audio",
+              "api/journal/journal-date",
+              "api/journal/update-journal",
+              "api/journal/delete-journal",
+              "api/journal/get-calendar-data"
+            ]
+          },
+          {
+            "group": "Notes",
+            "pages": [
+              "api/notes/get-notes",
+              "api/notes/get-single-note",
+              "api/notes/get-note-item",
+              "api/notes/create-note-text",
+              "api/notes/create-note-imgdoc",
+              "api/notes/update-note",
+              "api/notes/delete-note",
+              "api/notes/create-note-audio",
+              "api/notes/bulk-delete",
+              "api/notes/new-note-item-text",
+              "api/notes/new-note-item-imgdoc",
+              "api/notes/new-note-item-audio",
+              "api/notes/update-note-item-content",
+              "api/notes/delete-note-item",
+              "api/notes/reorder-note-items",
+              "api/notes/get-labels",
+              "api/notes/gen-ai-content",
+              "api/notes/get-specific-label",
+              "api/notes/create-label",
+              "api/notes/update-label",
+              "api/notes/delete-label",
+              "api/notes/delete-ai-insights",
+              "api/notes/transcribe-audio"
+            ]
+          },
+
+          {
+            "group": "Lists",
+            "pages": [
+              "api/lists/create-new-list",
+              "api/lists/delete-list",
+              "api/lists/get-all-lists",
+              "api/lists/get-specific-list",
+              "api/lists/update-list"
+            ]
+          },
+          {
+            "group": "Calendar",
+            "pages": ["api/calendar/calendar-view"]
+          },
+          {
+            "group": "Public notes - Comments",
+            "pages": [
+              "api/public-notes/add-comments",
+              "api/public-notes/delete-comments",
+              "api/public-notes/get-comments",
+              "api/public-notes/update-comment",
+              "api/public-notes/get-public-note"
+            ]
+          },
+
+          {
+            "group": "Section",
+            "pages": [
+              "api/section/create-section",
+              "api/section/get-specific-section",
+              "api/section/reorder-sections",
+              "api/section/section-to-new-list",
+              "api/section/specific-list-section",
+              "api/section/update-section-name"
+            ]
+          },
+
+          {
+            "group": "Tasks",
+            "pages": [
+              "api/tasks/get-tasks",
+              "api/tasks/get-specific-task",
+              "api/tasks/create-task",
+              "api/tasks/update-task",
+              "api/tasks/delete-task",
+              "api/tasks/bulk-delete"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Visit Site",
+          "href": "https://mysamantha.ai",
+          "icon": "book-open-cover"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://mysamantha.ai/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:hi@mintlify.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://dashboard.mintlify.com"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  }
+}
