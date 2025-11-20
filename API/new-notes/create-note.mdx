@@ -1,0 +1,66 @@
+---
+title: "Create Note"
+description: "Create a new note with optional file upload and audio transcription."
+---
+
+# POST `/notes/`
+
+Create a new note.  
+Supports text notes, file attachments (images, documents, audio), and optional audio transcription.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|--------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+| Content-Type | multipart/form-data | Yes | Required for uploading files |
+
+---
+
+## 📤 Form Data Fields
+
+| Field      | Type     | Required | Description |
+|------------|----------|----------|-------------|
+| title      | String   | No       | Title of the note (default: "Untitled Note") |
+| category   | Integer  | No       | Category ID |
+| transcribe | Boolean (`true/false`) | No | If uploading audio, `transcribe=true` enables transcription |
+| file       | File     | No       | Optional attachment (image, document, or audio file) |
+
+---
+
+## 📥 Response — 201 Created
+
+### Response Fields
+
+| Field            | Type         | Description |
+|------------------|--------------|-------------|
+| note_uuid        | UUID         | Unique identifier of the created note |
+| title            | String       | Title of the note |
+| category         | Integer      | Category assigned to the note |
+| labels           | Array        | Labels applied to the note |
+| is_pinned        | Boolean      | Whether the note is pinned |
+| is_public        | Boolean      | Whether the note is public |
+| content          | String       | Text content of the note |
+| attachments      | Array        | Uploaded files metadata |
+| ai_content_items | Array        | AI-generated content items |
+| created_at       | ISO datetime | Timestamp of creation |
+| updated_at       | ISO datetime | Timestamp of last update |
+
+### Example Response
+
+```json
+{
+    "note_uuid": "f69b5928-1479-4839-b2f3-2a089efdb618",
+    "title": "Untitled Note",
+    "category": 8,
+    "labels": [],
+    "is_pinned": false,
+    "is_public": false,
+    "content": "",
+    "attachments": [],
+    "ai_content_items": [],
+    "created_at": "2025-11-19T07:56:23.651454Z",
+    "updated_at": "2025-11-19T07:56:23.664758Z"
+}

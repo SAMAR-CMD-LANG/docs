@@ -1,0 +1,54 @@
+---
+title: "Get Specific Note"
+description: "Retrieve a single note by its unique UUID, including content, attachments, and metadata."
+---
+
+# GET `/notes/{note_uuid}/`
+
+Retrieve a specific note using its UUID.  
+Returns full metadata, content, attachments, and any AI-generated insights.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the request |
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field            | Type         | Description |
+|------------------|--------------|-------------|
+| note_uuid        | UUID         | Unique identifier for the note |
+| title            | String       | Note title |
+| category         | Integer      | Category ID |
+| labels           | Array        | Labels tied to the note |
+| is_pinned        | Boolean      | Whether note is pinned |
+| is_public        | Boolean      | Whether note is public |
+| content          | String       | Full content including HTML + text |
+| attachments      | Array        | Note attachments (audio/image/doc) |
+| ai_content_items | Array        | AI-generated insights |
+| created_at       | ISO datetime | Creation timestamp |
+| updated_at       | ISO datetime | Last update timestamp |
+
+### Example Response
+
+```json
+{
+    "note_uuid": "f69b5928-1479-4839-b2f3-2a089efdb618",
+    "title": "Untitled Note",
+    "category": 8,
+    "labels": [],
+    "is_pinned": false,
+    "is_public": true,
+    "content": "<div class=\"attachment-embed\" data-attachment-id=\"1475\" ...>[Attachment]</div>\n\n Thank you.\n\n Thank you.",
+    "attachments": [],
+    "ai_content_items": [],
+    "created_at": "2025-11-19T07:56:23.651454Z",
+    "updated_at": "2025-11-20T03:44:43.063667Z"
+}

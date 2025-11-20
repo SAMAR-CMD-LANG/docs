@@ -1,0 +1,40 @@
+---
+title: "Remove Attachment"
+description: "Remove an attachment (audio, image, or document) from a note."
+---
+
+# DELETE `/notes/{note_uuid}/attachments/{attachment_id}/`
+
+Remove a specific attachment from a note.  
+This deletes only the attachment, not the note itself.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the request |
+
+---
+
+## 📤 Request Body
+
+This endpoint does **not** take any request body.
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field   | Type   | Description |
+|---------|--------|-------------|
+| message | String | Confirmation message |
+
+### Example Response
+
+```json
+{
+  "message": "Attachment removed from note"
+}

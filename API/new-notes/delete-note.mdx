@@ -1,0 +1,36 @@
+---
+title: "Delete Note"
+description: "Delete a specific note permanently along with its content and attachments."
+---
+
+# DELETE `/notes/{note_uuid}/`
+
+Delete a specific note using its UUID.  
+This action permanently removes the note and all related data, including content, attachments, and AI insights.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the request |
+
+---
+
+## 📤 Request Body
+
+This endpoint does **not** accept a request body.
+
+---
+
+## 📥 Response — 204 No Content
+
+The note is deleted successfully.  
+No response body is returned.
+
+### Status Code
+
+| Code | Description |
+|------|-------------|
+| 204  | Note deleted successfully |

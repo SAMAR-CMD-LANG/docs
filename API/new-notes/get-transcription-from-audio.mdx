@@ -1,0 +1,65 @@
+---
+title: "Generate Transcription (From Audio Attachment)"
+description: "Generate a transcription from an existing audio attachment in a note."
+---
+
+# POST `/notes/{note_uuid}/transcribe/{attachment_id}/`
+
+Generate a transcription from an existing **audio file** attached to a note.  
+This endpoint processes the audio, extracts text, and updates the note's content with the transcription.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the request |
+| Content-Type  | application/json | Yes | JSON request format |
+
+---
+
+## 📤 Request Body
+
+This endpoint **does not require a request body**.
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field            | Type         | Description |
+|------------------|--------------|-------------|
+| note_uuid        | UUID         | Note identifier |
+| title            | String       | Note title |
+| category         | Integer      | Category ID |
+| labels           | Array        | Associated labels |
+| is_pinned        | Boolean      | Whether the note is pinned |
+| is_public        | Boolean      | Public visibility status |
+| content          | String       | Updated note content including transcription |
+| attachments      | Array        | Attachment metadata |
+| ai_content_items | Array        | AI insights present in the note |
+| created_at       | ISO datetime | Original creation timestamp |
+| updated_at       | ISO datetime | Updated timestamp after transcription |
+
+### Example Response
+
+```json
+{
+    "note_uuid": "f69b5928-1479-4839-b2f3-2a089efdb618",
+    "title": "Untitled Note",
+    "category": 8,
+    "labels": [],
+    "is_pinned": false,
+    "is_public": true,
+    "content": "<div class=\"attachment-embed\" data-attachment-id=\"1475\" ...>[Attachment]</div>\n\n Thank you.",
+    "attachments": [{ "id": 1475, "type": "audio", "name": "sample-3.m4a" }],
+    "ai_content_items": [{
+        "ai_content_uuid": "2e21841d-50a9-4428-b757-da14a128adf6",
+        "content": "- The speaker expresses surprise...",
+        "insight_type": "summary"
+    }],
+    "created_at": "2025-11-19T07:56:23.651454Z",
+    "updated_at": "2025-11-19T13:21:12.389310Z"
+}

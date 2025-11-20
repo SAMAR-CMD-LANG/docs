@@ -1,0 +1,71 @@
+---
+title: "Transcribe Audio Attachment"
+description: "Generate a transcription from an existing audio attachment inside a note and update the note content."
+---
+
+# POST `/notes/{note_uuid}/transcribe/{attachment_id}/`
+
+Transcribe an existing **audio attachment** within a note.  
+This endpoint processes the stored audio file, extracts speech into text, and appends the transcription directly into the note content.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 📤 Request Body
+
+This endpoint **does not accept** a request body.
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field            | Type         | Description |
+|------------------|--------------|-------------|
+| note_uuid        | UUID         | Note identifier |
+| title            | String       | Note title |
+| category         | Integer      | Category assigned to the note |
+| labels           | Array        | Labels linked to the note |
+| is_pinned        | Boolean      | Whether the note is pinned |
+| is_public        | Boolean      | Whether the note is publicly visible |
+| content          | String       | Updated HTML content including transcription |
+| attachments      | Array        | List of attachments in the note |
+| ai_content_items | Array        | AI insights for the note (empty if none) |
+| created_at       | ISO datetime | Timestamp when note was created |
+| updated_at       | ISO datetime | Timestamp when note was last updated |
+
+---
+
+### Example Response
+
+```json
+{
+  "note_uuid": "f69b5928-1479-4839-b2f3-2a089efdb618",
+  "title": "Untitled Note",
+  "category": 8,
+  "labels": [],
+  "is_pinned": false,
+  "is_public": true,
+  "content": "<div class=\"attachment-embed\" data-attachment-id=\"1475\" data-attachment-type=\"audio\" data-url=\"https://s3.ap-southeast-1.wasabisys.com/samantha/media/audio/600aba61-dae8-471f-886b-9ba9a31070e8.m4a\" data-name=\"sample-3.m4a\" data-size=\"343380\" data-created-on=\"2025-11-19T13:04:04.612483+00:00\" data-alignment=\"center\">[Attachment: sample-3.m4a]</div>\n\n Thank you.\n\n Thank you.",
+  "attachments": [
+    {
+      "id": 1475,
+      "url": "https://s3.ap-southeast-1.wasabisys.com/samantha/media/audio/600aba61-dae8-471f-886b-9ba9a31070e8.m4a",
+      "type": "audio",
+      "size": 343380,
+      "name": "sample-3.m4a",
+      "created_at": "2025-11-19T13:04:04.612483Z"
+    }
+  ],
+  "ai_content_items": [],
+  "created_at": "2025-11-19T07:56:23.651454Z",
+  "updated_at": "2025-11-20T03:44:43.063667Z"
+}

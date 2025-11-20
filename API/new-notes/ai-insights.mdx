@@ -1,0 +1,56 @@
+---
+title: "Generate AI Insight"
+description: "Generate an AI summary, analysis, or other insight for a specific note."
+---
+
+# POST `/notes/{note_uuid}/ai/`
+
+Generate an AI-generated insight from submitted text.  
+The result is saved as an AI content entry linked to the note.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+| Content-Type  | application/json | Yes | JSON body |
+
+---
+
+## 📤 Request Body
+
+| Field        | Type     | Required | Description |
+|--------------|----------|----------|-------------|
+| insight_type | String   | Yes | Type of insight (e.g. `summary`, `analysis`) |
+| content      | String   | Yes | Text that will be processed by AI |
+
+## Example Request Body
+
+```json
+{
+  "insight_type": "summary",
+  "content": "Really? Wow. So, there's all my controversy for today..."
+}
+```
+## Example Response
+```json
+{
+  "ai_content_uuid": "2e21841d-50a9-4428-b757-da14a128adf6",
+  "content": "- The speaker expresses surprise and frustration...\n- Overall, the tone reflects awareness...",
+  "insight_type": "summary",
+  "source_content": "Really? Wow. So, there's all my controversy for today...",
+  "created_at": "2025-11-19T13:07:16.588029Z"
+}
+```
+## Response Fields
+---
+| Field            | Type         | Description                               |
+|------------------|--------------|-------------------------------------------|
+| ai_content_uuid  | UUID         | Unique identifier for the AI insight      |
+| content          | String       | AI-generated insight or summary           |
+| insight_type     | String       | Requested type of insight                 |
+| source_content   | String       | Original text submitted for processing    |
+| created_at       | ISO datetime | Timestamp when the AI insight was created |
+---

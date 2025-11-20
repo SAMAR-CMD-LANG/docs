@@ -1,0 +1,68 @@
+---
+title: "Google Login (SSO)"
+description: "Authenticate users using Google OAuth and retrieve application session tokens."
+---
+
+# POST `/auth/social-login/`
+
+Authenticate a user using **Google Single Sign-On (SSO)**.  
+The client must first obtain an OAuth **Access Token** and **ID Token** from Google.  
+These tokens are then sent to this endpoint to verify the user and create a session in the Samantha system.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Content-Type | application/json | Yes | JSON request body |
+
+---
+
+## 📤 Request Body
+
+| Field        | Type   | Required | Description |
+|--------------|--------|----------|-------------|
+| provider     | String | Yes      | Must be `"google"` |
+| access_token | String | Yes      | OAuth Access Token from Google |
+| id_token     | String | Yes      | Google ID Token identifying the user |
+
+## Example Request
+
+```json
+{
+  "provider": "google",
+  "access_token": "GOOGLE_ACCESS_TOKEN_HERE",
+  "id_token": "GOOGLE_ID_TOKEN_HERE"
+}
+```
+---
+## Example Response
+```json
+{
+  "token": "app_session_token_here",
+  "user": {
+    "uuid": "a32dd6a8-24ec-4c27-b8a7-9cbcb4ad1340",
+    "email": "example@domain.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "profilepic": null,
+    "credit_balance": 25,
+    "earned_credits": 0,
+    "active_plans": [],
+    "upcoming_plans": [],
+    "currency": null,
+    "is_free_user": true,
+    "timezone": null
+  }
+}
+```
+---
+---
+## Response Fields
+---
+| Field | Type   | Description                  |
+|--------|--------|------------------------------|
+| token  | String | Samantha session token       |
+| user   | Object | Authenticated user object    |
+---

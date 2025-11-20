@@ -111,6 +111,22 @@
               "api/notes/transcribe-audio"
             ]
           },
+          {
+            "group": "new-notes",
+            "pages": [
+              "api/new-notes/ai-insights",
+              "api/new-notes/attach-file-to-note",
+              "api/new-notes/create-note",
+              "api/new-notes/delete-ai-insights",
+              "api/new-notes/delete-note",
+              "api/new-notes/get-all-notes",
+              "api/new-notes/get-transcription-from-audio",
+              "api/new-notes/remove-attachment",
+              "api/new-notes/retreive-note",
+              "api/new-notes/transcribe-attachment-in-note",
+              "api/new-notes/update-the-note"
+            ]
+          },
 
           {
             "group": "Lists",
@@ -127,10 +143,14 @@
             "pages": ["api/calendar/calendar-view"]
           },
           {
+            "group": "Notion",
+            "pages": ["api/notion-import/get-auth-url"]
+          },
+          {
             "group": "Public notes - Comments",
             "pages": [
-              "api/public-notes/add-comments",
-              "api/public-notes/delete-comments",
+              "api/public-notes/add-comment",
+              "api/public-notes/delete-comment",
               "api/public-notes/get-comments",
               "api/public-notes/update-comment",
               "api/public-notes/get-public-note"
@@ -146,6 +166,14 @@
               "api/section/section-to-new-list",
               "api/section/specific-list-section",
               "api/section/update-section-name"
+            ]
+          },
+          {
+            "group": "Reminders",
+            "pages": [
+              "api/reminders/create-new-reminder",
+              "api/reminders/delete-reminders",
+              "api/reminders/get-all-reminders"
             ]
           },
 

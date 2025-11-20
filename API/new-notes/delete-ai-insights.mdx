@@ -1,0 +1,40 @@
+---
+title: "Delete AI Content"
+description: "Delete an AI-generated insight or summary associated with a note."
+---
+
+# DELETE `/notes/{note_uuid}/ai/{ai_content_uuid}/`
+
+Delete a specific AI-generated content item from a note.
+
+---
+
+## 🔐 Required Headers
+
+| Key           | Value Format    | Required | Description               |
+| ------------- | --------------- | -------- | ------------------------- |
+| Authorization | Token `<token>` | Yes      | Authenticates the request |
+
+---
+
+## 📤 Request Body
+
+This endpoint does **not** require a request body.
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field   | Type   | Description                   |
+| ------- | ------ | ----------------------------- |
+| message | String | Deletion confirmation message |
+
+### Example Response
+
+```json
+{
+  "message": "AI content deleted successfully."
+}
+```

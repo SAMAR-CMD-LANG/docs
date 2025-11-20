@@ -1,0 +1,80 @@
+---
+title: "Get All Notes"
+description: "Retrieve all notes belonging to the authenticated user with optional search filtering."
+---
+
+# GET `/notes/?search=`
+
+Retrieve all notes for the authenticated user.  
+Supports an optional search query to filter notes by title or content.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+
+---
+
+## 🔍 Query Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| search    | String | No | Filter notes by title or content. If empty, returns all notes. |
+
+---
+
+## 📥 Response — 200 OK
+
+### Pagination Fields
+
+| Field     | Type            | Description |
+|-----------|------------------|-------------|
+| count     | Integer         | Total number of notes |
+| next      | String / null   | URL for next page |
+| previous  | String / null   | URL for previous page |
+| results   | Array           | List of note objects |
+
+---
+
+### Note Object Fields
+
+| Field            | Type         | Description |
+|------------------|--------------|-------------|
+| note_uuid        | UUID         | Unique identifier for the note |
+| title            | String       | Note title |
+| category         | Integer      | Category ID |
+| labels           | Array        | Labels associated with the note |
+| is_pinned        | Boolean      | Whether the note is pinned |
+| is_public        | Boolean      | Whether the note is public |
+| content_preview  | String/null  | Short preview of content (HTML or text) |
+| content          | String       | Full content, including embedded attachments |
+| created_at       | ISO datetime | Creation timestamp |
+| updated_at       | ISO datetime | Last modified timestamp |
+
+---
+
+### Example Response
+
+```json
+{
+    "count": 7,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "note_uuid": "f69b5928-1479-4839-b2f3-2a089efdb618",
+            "title": "Untitled Note",
+            "category": 8,
+            "labels": [],
+            "is_pinned": false,
+            "is_public": false,
+            "content_preview": null,
+            "content": "",
+            "created_at": "2025-11-19T07:56:23.651454Z",
+            "updated_at": "2025-11-19T07:56:23.664758Z"
+        }
+    ]
+}

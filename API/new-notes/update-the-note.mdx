@@ -1,0 +1,68 @@
+---
+title: "Update Note"
+description: "Update an existing note’s metadata or content."
+---
+
+# PATCH `/notes/{note_uuid}/`
+
+Update an existing note.  
+Supports updating the title, category, content, labels, and public/pinned status.
+
+---
+
+## 🔐 Required Headers
+
+| Key | Value Format | Required | Description |
+|------|-------------|----------|-------------|
+| Authorization | Token `<token>` | Yes | Authenticates the user |
+| Content-Type  | application/json | Yes | JSON request body |
+
+---
+
+## 📤 Request Body
+
+| Field      | Type     | Required | Description |
+|------------|----------|----------|-------------|
+| title      | String   | No       | New title of the note |
+| category   | Integer  | No       | Updated category |
+| labels     | Array    | No       | Updated labels array |
+| is_pinned  | Boolean  | No       | Whether the note should be pinned |
+| is_public  | Boolean  | No       | Whether the note is publicly shareable |
+| content    | String   | No       | Updated note content |
+
+---
+
+## 📥 Response — 200 OK
+
+### Response Fields
+
+| Field            | Type         | Description |
+|------------------|--------------|-------------|
+| note_uuid        | UUID         | Unique identifier |
+| title            | String       | Updated note title |
+| category         | Integer      | Updated category |
+| labels           | Array        | Updated labels |
+| is_pinned        | Boolean      | Whether the note is pinned |
+| is_public        | Boolean      | Whether the note is public |
+| content          | String       | Note content |
+| attachments      | Array        | Attachments linked to the note |
+| ai_content_items | Array        | AI-generated items |
+| created_at       | ISO datetime | Creation timestamp |
+| updated_at       | ISO datetime | Last updated timestamp |
+
+### Example Response
+
+```json
+{
+    "note_uuid": "f69b5928-1479-4839-b2f3-2a089efdb618",
+    "title": "Untitled Note",
+    "category": 8,
+    "labels": [],
+    "is_pinned": false,
+    "is_public": true,
+    "content": "",
+    "attachments": [],
+    "ai_content_items": [],
+    "created_at": "2025-11-19T07:56:23.651454Z",
+    "updated_at": "2025-11-19T08:52:44.857773Z"
+}
