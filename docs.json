@@ -147,6 +147,10 @@
             "pages": ["api/notion-import/get-auth-url"]
           },
           {
+            "group": "Create with Samantha",
+            "pages": ["api/create with samantha/create-todo"]
+          },
+          {
             "group": "Public notes - Comments",
             "pages": [
               "api/public-notes/add-comment",
